@@ -1,0 +1,19 @@
+
+<button label="Profil anzeigen" (click)="toggleProfile()">Profil anzeigen</button>
+
+<button label="Mitgleider anzeigen" (click)="toggleUsers()">Mitglieder anzeigen</button>
+
+<button label="Abmelden" (click)="logOut()">Abmelden</button>
+
+<div *ngIf="showProfile">
+    <app-profile [userData]="userData" (notificationEvent)="receiveNotification($event)"></app-profile>
+</div>
+
+<div *ngIf="showUsers">
+    <app-users [userCollection]="userCollection"></app-users>
+</div>
+
+
+
+
+

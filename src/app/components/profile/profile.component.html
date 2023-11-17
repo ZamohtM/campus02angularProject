@@ -1,0 +1,67 @@
+<h2>Benutzerprofil von</h2>
+<h4>{{userData.name}} {{userData.surname}}</h4>
+
+<button label="Profil bearbeiten" (click)="toggleEditForm()">Profil bearbeiten</button> <button label="Profil löschen" (click)="deleteProfile()">Profil löschen</button> <br /><br />
+
+<div *ngIf="showEditForm">
+<form [formGroup] = "editProfileForm" (ngSubmit)="submitEditedUser()">
+    <div>
+        <label for="name">Vorname</label><br />
+        <input type="text" formControlName="name" name="name"/>
+        <div style="color:red" *ngIf="name.invalid && (name.dirty || name.touched)">
+            <p *ngIf="name.errors?.['required']">Name ist ein Pflichtfeld.</p>
+        </div>
+    </div>
+    <div>
+        <label for="surname">Nachname</label><br />
+        <input type="text" formControlName="surname" name="surname"/>
+        <div style="color:red" *ngIf="surname.invalid && (surname.dirty || surname.touched)">
+            <p *ngIf="surname.errors?.['required']">Nachname ist ein Pflichtfeld.</p>
+        </div>
+    </div>
+
+    <div>
+        <label for="email">E-Mail</label><br />
+        <input type="text" formControlName="email" name="email"/>
+        <div style="color:red" *ngIf="email.invalid && (email.dirty || email.touched)">
+            <p *ngIf="email.errors?.['required']">E-Mail Adresse ist ein Pflichtfeld und muss gültig sein.</p>
+            <p *ngIf="email.errors?.['email']">Die E-Mail Adresse muss gültig sein.</p>
+        </div>
+    </div>
+
+    <div>
+        <label for="password">Passwort</label><br />
+        <input type="password" formControlName="password" name="password"/>
+        <div style="color:red" *ngIf="password.invalid && (password.dirty || password.touched)">
+                <ul>
+                    <li>Mindestens 8 Zeichen</li>
+                    <li>Kleinbuchstabe</li>
+                    <li>Großbuchstabe</li>
+                    <li>Ziffer</li>
+                    <li>Sonderzeichen</li>
+                </ul>
+        </div>
+    </div>
+
+    <div>
+        <label for="confirmPassword">Passwort bestätigen</label><br />
+        <input type="password" formControlName="confirmPassword" name="confirmPassword" value=""/>
+        <div style="color:red" *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+                <ul>
+                    <li>Mindestens 8 Zeichen</li>
+                    <li>Kleinbuchstabe</li>
+                    <li>Großbuchstabe</li>
+                    <li>Ziffer</li>
+                    <li>Sonderzeichen</li>
+                </ul>
+        </div>
+        <p style="color:red" *ngIf="editProfileForm.errors?.['passwordMismatch'] && confirmPassword.valid && password.valid">
+            Die Passwörter müssen übereinstimmen.
+        </p>
+    </div>
+
+    <br />
+
+    <button label="Speichern" type="submit" [disabled]="editProfileForm.invalid">Speichern</button>
+</form>
+</div>
