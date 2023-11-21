@@ -1,28 +1,34 @@
+<div class="d-flex align-items-center justify-content-center">
 <h2>Benutzerprofil von</h2>
+</div>
+<div class="d-flex align-items-center justify-content-center">
 <h4>{{userData.name}} {{userData.surname}}</h4>
+</div>
 
-<button label="Profil bearbeiten" (click)="toggleEditForm()">Profil bearbeiten</button> <button label="Profil löschen" (click)="deleteProfile()">Profil löschen</button> <br /><br />
-
+<div class="d-flex align-items-center justify-content-center">
+<button label="Profil bearbeiten" (click)="toggleEditForm()" class="btn btn-primary">Profil bearbeiten</button> &nbsp; <button class="btn btn-danger" label="Profil löschen" (click)="deleteProfile()">Profil löschen</button> <br /><br />
+</div>
 <div *ngIf="showEditForm">
+<div class="d-flex align-items-center justify-content-center">
 <form [formGroup] = "editProfileForm" (ngSubmit)="submitEditedUser()">
     <div>
-        <label for="name">Vorname</label><br />
-        <input type="text" formControlName="name" name="name"/>
+        <label for="name" class="form-label">Vorname</label><br />
+        <input type="text" formControlName="name" name="name" class="form-control"/>
         <div style="color:red" *ngIf="name.invalid && (name.dirty || name.touched)">
             <p *ngIf="name.errors?.['required']">Name ist ein Pflichtfeld.</p>
         </div>
     </div>
     <div>
-        <label for="surname">Nachname</label><br />
-        <input type="text" formControlName="surname" name="surname"/>
+        <label for="surname" class="form-label">Nachname</label><br />
+        <input type="text" formControlName="surname" name="surname" class="form-control"/>
         <div style="color:red" *ngIf="surname.invalid && (surname.dirty || surname.touched)">
             <p *ngIf="surname.errors?.['required']">Nachname ist ein Pflichtfeld.</p>
         </div>
     </div>
 
     <div>
-        <label for="email">E-Mail</label><br />
-        <input type="text" formControlName="email" name="email"/>
+        <label for="email" class="form-label">E-Mail</label><br />
+        <input type="text" formControlName="email" name="email" class="form-control"/>
         <div style="color:red" *ngIf="email.invalid && (email.dirty || email.touched)">
             <p *ngIf="email.errors?.['required']">E-Mail Adresse ist ein Pflichtfeld und muss gültig sein.</p>
             <p *ngIf="email.errors?.['email']">Die E-Mail Adresse muss gültig sein.</p>
@@ -30,8 +36,8 @@
     </div>
 
     <div>
-        <label for="password">Passwort</label><br />
-        <input type="password" formControlName="password" name="password"/>
+        <label for="password" class="form-label">Passwort</label><br />
+        <input type="password" formControlName="password" name="password" class="form-control"/>
         <div style="color:red" *ngIf="password.invalid && (password.dirty || password.touched)">
                 <ul>
                     <li>Mindestens 8 Zeichen</li>
@@ -44,8 +50,8 @@
     </div>
 
     <div>
-        <label for="confirmPassword">Passwort bestätigen</label><br />
-        <input type="password" formControlName="confirmPassword" name="confirmPassword" value=""/>
+        <label for="confirmPassword" class="form-label">Passwort bestätigen</label><br />
+        <input type="password" formControlName="confirmPassword" name="confirmPassword" value="" class="form-control"/>
         <div style="color:red" *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
                 <ul>
                     <li>Mindestens 8 Zeichen</li>
@@ -62,6 +68,9 @@
 
     <br />
 
-    <button label="Speichern" type="submit" [disabled]="editProfileForm.invalid">Speichern</button>
+    <div class="d-grid gap-2">
+    <button label="Speichern" type="submit" [disabled]="editProfileForm.invalid" class="btn btn-primary">Speichern</button>
+    </div>
 </form>
+</div>
 </div>
