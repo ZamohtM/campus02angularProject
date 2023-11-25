@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/auth';
+import {BookService} from "../../services/book.service";
+import {Book} from "../../interfaces/book";
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,7 @@ import { User } from '../../interfaces/auth';
 })
 export class HomeComponent {
 
-  constructor(private router: Router,private auth: AuthService) { }
+  constructor(private router: Router,private auth: AuthService, private books: BookService) { }
 
   logOut() {
     sessionStorage.clear();
@@ -18,12 +20,13 @@ export class HomeComponent {
     alert("Abmeldung erfolgreich.")
   }
 
-  showProfile: boolean = false;
-  showUsers: boolean = false;
+
+  activeView: string = ""; //Profile,Users,Books
   userData = {} as User;
   userCollection: User[] = [];
+  bookCollection: Book[] = [];
   notification: string = "";
-  
+
 
   toggleProfile() {
     const currentUserEmail = sessionStorage.getItem('email');
@@ -32,14 +35,11 @@ export class HomeComponent {
         if(response.length > 0)
         {
           this.userData = response[0];
-          if(this.showUsers)
+          if(this.activeView!="profile")
           {
-            this.showUsers = false;
-            this.showProfile = !this.showProfile;
-          } else {
-            this.showProfile = !this.showProfile;
+            this.activeView="profile"
           }
-        } 
+        }
       }
     )
   }
@@ -50,21 +50,33 @@ export class HomeComponent {
         if(response.length > 0)
         {
           this.userCollection = response;
-          if(this.showProfile)
+          if(this.activeView!="users")
           {
-            this.showProfile = false;
-            this.showUsers = !this.showUsers;
-          } else {
-          this.showUsers = !this.showUsers;
+            this.activeView="users"
           }
-        } 
+        }
+      }
+    )
+  }
+
+  toggleBooks(){
+    this.books.getBooks().subscribe(
+      response => {
+        if(response.length > 0)
+        {
+          this.bookCollection = response;
+          if(this.activeView!="books")
+          {
+            this.activeView="books"
+          }
+        }
       }
     )
   }
 
   receiveNotification($event: string)
   {
-    this.showProfile = false;
+    this.activeView="";
     this.notification = $event;
     alert(this.notification);
   }

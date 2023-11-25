@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './components/profile/profile.component';
 import { UsersComponent } from './components/users/users.component';
 import { DataTablesModule } from "angular-datatables";
+import { BooksComponent } from './components/books/books.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { DataTablesModule } from "angular-datatables";
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
-    UsersComponent
+    UsersComponent,
+    BooksComponent
   ],
   imports: [
     BrowserModule,

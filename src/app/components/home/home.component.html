@@ -1,17 +1,33 @@
 
-<button label="Profil anzeigen" (click)="toggleProfile()">Profil anzeigen</button>
+<button label="Profil" (click)="toggleProfile()">Profil</button>
 
-<button label="Mitgleider anzeigen" (click)="toggleUsers()">Mitglieder anzeigen</button>
+<button label="Mitgleider" (click)="toggleUsers()">Mitglieder</button>
+
+<button label="Bücher" (click)="toggleBooks()">Bücher</button>
 
 <button label="Abmelden" (click)="logOut()">Abmelden</button>
 
-<div *ngIf="showProfile">
+<div [ngSwitch]="activeView">
+  <ng-container *ngSwitchCase="'profile'">
     <app-profile [userData]="userData" (notificationEvent)="receiveNotification($event)"></app-profile>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'users'">
+    <!-- Content for the 'user' state -->
+    <app-users [userCollection]="userCollection"></app-users>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'books'">
+    <app-books [bookCollection]="bookCollection"></app-books>
+  </ng-container>
+
+  <!-- Add more ngSwitchCase as needed for other states -->
+
+  <ng-container *ngSwitchDefault>
+    <!-- Default content or fallback if activeState doesn't match any case -->
+  </ng-container>
 </div>
 
-<div *ngIf="showUsers">
-    <app-users [userCollection]="userCollection"></app-users>
-</div>
 
 
 
