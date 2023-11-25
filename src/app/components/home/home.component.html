@@ -1,24 +1,9 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Campus02 Project - Books</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" (click)="toggleProfile()">Profil</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="toggleUsers()">Mitglieder</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="logOut()">Abmelden</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+
+<button label="Profil anzeigen" (click)="toggleProfile()">Profil anzeigen</button>
+
+<button label="Mitgleider anzeigen" (click)="toggleUsers()">Mitglieder anzeigen</button>
+
+<button label="Abmelden" (click)="logOut()">Abmelden</button>
 
 <div *ngIf="showProfile">
     <app-profile [userData]="userData" (notificationEvent)="receiveNotification($event)"></app-profile>
@@ -27,8 +12,6 @@
 <div *ngIf="showUsers">
     <app-users [userCollection]="userCollection"></app-users>
 </div>
-
-
 
 
 

@@ -1,19 +1,17 @@
-<div class="d-flex align-items-center justify-content-center">
-    <h1>Anmeldung</h1>
-</div>
-<div class="d-flex align-items-center justify-content-center">
+<h1>Anmelden</h1>
+<br/>
 <form [formGroup] = "loginForm" (ngSubmit)="loginUser()">
     <div>
-        <label for="email" class="form-label">E-Mail</label><br />
-        <input type="text" formControlName="email" name="email" class="form-control"/>
+        <label for="email">E-Mail</label><br />
+        <input type="text" formControlName="email" name="email"/>
         <div style="color:red" *ngIf="email.invalid && (email.dirty || email.touched)">
             <p *ngIf="email.errors?.['required']">E-Mail Adresse ist ein Pflichtfeld und muss gültig sein.</p>
             <p *ngIf="email.errors?.['email']">Die E-Mail Adresse muss gültig sein.</p>
         </div>
     </div>
     <div>
-        <label for="password" class="form-label">Passwort</label><br />
-        <input type="password" formControlName="password" name="password" class="form-control"/>
+        <label for="password">Passwort</label><br />
+        <input type="password" formControlName="password" name="password"/>
         <div style="color:red" *ngIf="password.invalid && (password.dirty || password.touched)">
             <p *ngIf="password.errors?.['required']">Passwort ist ein Pflichtfeld.</p>
         </div>
@@ -21,13 +19,11 @@
 
     <br />
 
-    <div class="d-grid gap-2">
-    <button label="Login" type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button>
-    </div>
+    <button label="Login" type="submit" [disabled]="loginForm.invalid">Login</button>
+
     <br />
 
     <div>
         Noch kein Mitglied? <a routerLink="/register">Registrieren</a>
     </div>
 </form>
-</div>
