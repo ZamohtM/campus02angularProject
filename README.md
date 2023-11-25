@@ -3,6 +3,7 @@ Book management system
 
 ##########################
 
+<<<<<<< HEAD
 INSTALLATION
 
 REQ:
@@ -26,3 +27,11 @@ json-server --watch db.json
  
 
 ng add angular-datatables
+=======
+* npm install
+* npm install @angular/cli
+* npm install -g json-server
+* ng add angular-datatables
+* npm install bootstrap bootstrap-icons
+* npm install @ng-bootstrap/ng-bootstrap@next --force
+>>>>>>> 1bb5849955646f260fb3811ec5051ae98cf3c03a
