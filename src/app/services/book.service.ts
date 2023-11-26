@@ -20,6 +20,15 @@ export class BookService {
     return this.http.delete(`${this.dbUrl}/books/${bookId}`);
   }
 
+  editBook(bookId: string, updatedBookData: Book): Observable<any> {
+    return this.http.put(`${this.dbUrl}/books/${bookId}`, updatedBookData);
+  }
+
+  getBookById(id: string): Observable<Book>
+  {
+    return this.http.get<Book>(`${this.dbUrl}/books?id=${id}`);
+  }
+
   getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(`${this.dbUrl}/books`);
   }

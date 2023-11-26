@@ -1,3 +1,111 @@
 <h2>Bücher</h2>
+<div>
+  <table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
+</div>
+<div>
+  <button label="Buch hinzufügen" (click)="toggleCreateForm()">Buch hinzufügen</button>
+  <button label="Buch bearbeiten" (click)="toggleEditForm()">Buch bearbeiten</button>
+  <button label="Buch entfernen" (click)="toggleRemoveForm()">Buch entfernen</button>
+</div>
+<div [ngSwitch]="activeForm">
+  <ng-container *ngSwitchCase="'create'">
+    <h4> Buch hinzufügen</h4>
+    <form [formGroup] = "editForm">
+      <div>
+        <label for="createTitle">Title</label><br />
+        <input type="text" id= "createTitle" formControlName="title" name="title"/>
+        <div style="color:red" *ngIf="title.invalid && (title.dirty || title.touched)">
+          <p *ngIf="title.errors?.['required']">Titel ist ein Pflichtfeld.</p>
+        </div>
+      </div>
+      <div>
+        <label for="createAuthor">Author</label><br />
+        <input type="text" id= "createAuthor" formControlName="author" name="author"/>
+        <div style="color:red" *ngIf="author.invalid && (author.dirty || author.touched)">
+          <p *ngIf="author.errors?.['required']">Author ist ein Pflichtfeld.</p>
+        </div>
+      </div>
 
-<table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
+      <div>
+        <label for="createYear">Jahr</label><br />
+        <input type="text" id="createYear" formControlName="year" name="year"/>
+        <div style="color:red" *ngIf="year.invalid && (year.dirty || year.touched)">
+          <p *ngIf="year.errors?.['required']">Bitte geben Sie eine korrekte Jahreszahl ein im Format: YYYY</p>
+        </div>
+      </div>
+
+      <div>
+        <label for="createGenre">Genre</label><br />
+        <input type="text" id="createGenre" formControlName="genre" name="genre"/>
+        <div style="color:red" *ngIf="genre.invalid && (genre.dirty || genre.touched)">
+          <p *ngIf="genre.errors?.['required']">Genre ist ein Pflichtfeld</p>
+        </div>
+      </div>
+      <button label="Hinzufügen" (click)="addBook()" [disabled]="editForm.invalid">Hinzufügen</button>
+    </form>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'edit'">
+  <h4>Buch bearbeiten</h4>
+    <div>
+      <p>ID:</p>
+    <textarea [(ngModel)]="editorText">
+    </textarea>
+      </div>
+    <div>
+    <button label="Buch wählen" (click)="toggleEditButton()">Buch wählen</button>
+    </div>
+
+    <div *ngIf="showEditForm">
+    <form [formGroup] = "editForm" (ngSubmit)="editBook()">
+      <div>
+        <label for="editTitle">Title</label><br />
+        <input type="text" id ="editTitle" formControlName="title" name="title"/>
+        <div style="color:red" *ngIf="title.invalid && (title.dirty || title.touched)">
+          <p *ngIf="title.errors?.['required']">Titel ist ein Pflichtfeld.</p>
+        </div>
+      </div>
+      <div>
+        <label for="editAuthor">Author</label><br />
+        <input type="text" id="editAuthor" formControlName="author" name="author"/>
+        <div style="color:red" *ngIf="author.invalid && (author.dirty || author.touched)">
+          <p *ngIf="author.errors?.['required']">Author ist ein Pflichtfeld.</p>
+        </div>
+      </div>
+
+      <div>
+        <label for="editYear">Jahr</label><br />
+        <input type="text" id="editYear" formControlName="year" name="year"/>
+        <div style="color:red" *ngIf="year.invalid && (year.dirty || year.touched)">
+          <p *ngIf="year.errors?.['required']">Bitte geben Sie eine korrekte Jahreszahl ein im Format: YYYY</p>
+        </div>
+      </div>
+
+      <div>
+        <label for="editGenre">Genre</label><br />
+        <input type="text" id="editGenre" formControlName="genre" name="genre"/>
+        <div style="color:red" *ngIf="genre.invalid && (genre.dirty || genre.touched)">
+          <p *ngIf="genre.errors?.['required']">Genre ist ein Pflichtfeld</p>
+        </div>
+      </div>
+      <button label="Bearbeiten" (click)="editBook()" [disabled]="editForm.invalid">Bearbeiten</button>
+    </form>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'remove'">
+    <h4>Buch entfernen</h4>
+    <div>
+      <p>ID:</p>
+      <textarea [(ngModel)]="editorText">
+    </textarea>
+    </div>
+    <div>
+      <button label="Entfernen" (click)="removeBook()" >Buch wählen</button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+
+  </ng-container>
+</div>

@@ -14,7 +14,7 @@ import { HomeComponent } from '../home/home.component';
 export class ProfileComponent implements OnInit{
 
   @Input() userData = {} as User;
- 
+
   @Output() notificationEvent = new EventEmitter<string>();
 
   editProfileForm!: FormGroup;
@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit{
   {
     return this.editProfileForm.controls['surname'];
   }
-  
+
   get email()
   {
     return this.editProfileForm.controls['email'];
@@ -76,7 +76,7 @@ export class ProfileComponent implements OnInit{
 
     this.auth.editUser(this.userData.id, userData as User).subscribe(response => {
         console.log(response);
-        this.home.showProfile = false;
+        this.home.activeView="";
         this.sendNotification(userData.name,userData.surname,this.userData.id);
     }, error => {
         console.log(error);
@@ -85,13 +85,13 @@ export class ProfileComponent implements OnInit{
   }
 
   deleteProfile()
-  { 
+  {
      this.auth.deleteUser(this.userData.id).subscribe(response => {
-      console.log(response); 
-      this.home.logOut(); 
+      console.log(response);
+      this.home.logOut();
       alert("Ihr Benutzerprofil wurde erfolgreich gelöscht.")
      }, error => {
-      console.log(error);  
+      console.log(error);
       alert("Beim Löschen Ihres Benutzerprofils ist ein fehler aufgetreten, bitte versuchen Sie es später erneut.")
     })
   }

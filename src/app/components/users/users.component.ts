@@ -11,7 +11,7 @@ export class UsersComponent implements OnInit{
 
   constructor(private auth: AuthService){}
 
-  @Input() userCollection: User[] = []; 
+  @Input() userCollection: User[] = [];
 
   dtOptions: DataTables.Settings = {};
 
