@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './components/profile/profile.component';
 import { UsersComponent } from './components/users/users.component';
 import { DataTablesModule } from "angular-datatables";
+import { RecessionSearchComponent } from './recession-search/recession-search.component';
 import { BooksComponent } from './components/books/books.component';
 
 @NgModule({
@@ -19,8 +20,7 @@ import { BooksComponent } from './components/books/books.component';
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
-    UsersComponent,
-    BooksComponent
+    UsersComponent
   ],
   imports: [
     BrowserModule,
