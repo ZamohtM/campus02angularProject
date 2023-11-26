@@ -1,6 +1,6 @@
 <h2>Bücher</h2>
 <div>
-  <table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
+  <table datatable [dtOptions]="dtOptions" class="row-border hover" id="bookTable"></table>
 </div>
 <div>
   <button label="Buch hinzufügen" (click)="toggleCreateForm()">Buch hinzufügen</button>
@@ -101,7 +101,7 @@
     </textarea>
     </div>
     <div>
-      <button label="Entfernen" (click)="removeBook()" >Buch wählen</button>
+      <button label="Entfernen" (click)="removeBook()" >Buch entfernen</button>
     </div>
   </ng-container>
 

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {BookService} from "../../services/book.service";
 import {Book} from "../../interfaces/book";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -10,7 +10,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class BooksComponent implements OnInit{
   constructor(private formBuilder: FormBuilder, private bookService: BookService){}
-
   @Input() bookCollection: Book[] = [];
   @Input() book = {} as Book;
   editForm!: FormGroup;
@@ -19,6 +18,7 @@ export class BooksComponent implements OnInit{
   showEditForm : boolean = false;
   activeForm : string = "";
   editorText : string = "";
+
 
   ngOnInit(): void {
       console.log('ngOnInit called');
@@ -41,32 +41,51 @@ export class BooksComponent implements OnInit{
         data: 'genre'
       }]
     };
+
   this.createEditForm();
   this.createRemoveForm();
-
   }
-  addBook(){
-    console.log("added book");
-    console.log(this.book);
-    this.book.id = this.generateRandomId()
-    //this.bookService.addBook(this.book).subscribe();
+
+  addBook() {
+    const randomId = this.generateUniqueRandomId();
+    this.book = {
+      id: this.generateUniqueRandomId(),
+      title: this.title.value,
+      author: this.author.value,
+      year: this.year.value,
+      genre: this.genre.value,
+    };
+    this.bookService.addBook(this.book).subscribe(
+      (response) => {
+        console.log('Book added successfully:', response);
+      },
+      (error) => {
+        console.error('Error adding book:', error);
+      }
+    );
   }
   removeBook(){
     console.log("removed book")
-    this.bookService.removeBook(this.book.id);
+    this.bookService.removeBook(this.id).subscribe();
   }
   editBook(){
-    console.log("edited book")
-    this.bookService.editBook(this.book.id,this.book);
+    this.bookService.editBook(this.id, {
+      id: this.id,
+      title: this.title.value,
+      author: this.author.value,
+      year: this.year.value,
+      genre: this.genre.value,
+    }).subscribe();
+
   }
 
   private createEditForm(){
     this.editForm = this.formBuilder.group(
       {
-        title: [Validators.required],
-        author: [Validators.required],
-        year: [Validators.required],
-        genre: [Validators.required]
+        title: ['',Validators.required],
+        author: ['',Validators.required],
+        year: ['',[Validators.required,Validators.pattern(/^\d{4}$/)]],
+        genre: ['',Validators.required]
 
       })
   }
@@ -74,7 +93,7 @@ export class BooksComponent implements OnInit{
   private createRemoveForm() {
     this.removeForm = this.formBuilder.group(
       {
-        ID: [Validators.required]
+        ID: ['',Validators.required]
       }
     )
   }
@@ -117,7 +136,7 @@ export class BooksComponent implements OnInit{
   }
 
     toggleEditButton() {
-            this.bookService.getBookById(this.editorText).subscribe(
+            this.bookService.getBookById(this.id).subscribe(
                 response => {
                     if (Array.isArray(response) && response.length > 0) {
                         const bookData = response[0];
@@ -140,7 +159,10 @@ export class BooksComponent implements OnInit{
                 }
             );
     }
-
+  get id()
+  {
+    return this.editorText
+  }
   get author()
   {
     return this.editForm.controls['author'];
@@ -164,19 +186,51 @@ export class BooksComponent implements OnInit{
   private generateRandomId(): string {
     // this example generates a random string of 8 characters.
     const randomId = Math.random().toString(36).substring(2, 10);
-    this.checkId(randomId);
     return randomId;
   }
-  private checkId(id:string)
-  {
-    var tempId : string ='';
-    var duplicate : boolean = true;
-//    while(duplicate)
-    {
-
+  private generateUniqueRandomId(): string {
+    let randomId = this.generateRandomId();
+    while (this.checkIdExists(randomId)) {
+      randomId = this.generateRandomId();
     }
-    this.bookService.getBookById("999").subscribe(response=>{tempId=response.id})
-    console.log(tempId);
+    return randomId;
   }
 
+  private checkIdExists(id: string): boolean {
+
+    let exists = false;
+    this.bookService.getBookById(id).subscribe(
+      (_) => {
+
+        exists = true;
+      },
+      (error) => {
+
+        exists = false;
+      }
+    );
+    return exists;
+  }
+
+  updateBookCollection()
+  {
+    this.bookService.getBooks().subscribe(
+      (books) => {
+        this.bookCollection = books;
+
+        console.log('Updated book collection:', this.bookCollection);
+      },
+      (error) => {
+        console.error('Error fetching updated book collection:', error);
+      }
+    );
+  }
+
+
+  private updateDataTable() {
+    // Update the DataTable options with the new book collection
+
+  }
 }
+
+
