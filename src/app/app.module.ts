@@ -20,7 +20,8 @@ import { BooksComponent } from './components/books/books.component';
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
-    UsersComponent
+    UsersComponent,
+    BooksComponent
   ],
   imports: [
     BrowserModule,
