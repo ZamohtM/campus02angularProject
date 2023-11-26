@@ -7,6 +7,7 @@ import { authGuard } from './guards/auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { UsersComponent } from './components/users/users.component';
 import {BooksComponent} from "./components/books/books.component";
+import { RecessionSearchComponent } from './recession-search/recession-search.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
   {
     path:'books',
     component:BooksComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path:'recessions',
+    component:RecessionSearchComponent,
     canActivate: [authGuard]
   },
   {

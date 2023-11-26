@@ -1,5 +1,5 @@
 export interface Recession {
-    id: number;
+    id: string;
     reply_id: string;
     book_id: string;
     user_id: string;

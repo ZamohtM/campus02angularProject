@@ -4,6 +4,8 @@ import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/auth';
 import {BookService} from "../../services/book.service";
 import {Book} from "../../interfaces/book";
+import { Recession } from '../../interfaces/recession';
+import { RecessionService } from "../../services/recession.service";
 
 @Component({
   selector: 'app-home',
@@ -12,7 +14,7 @@ import {Book} from "../../interfaces/book";
 })
 export class HomeComponent {
 
-  constructor(private router: Router,private auth: AuthService, private books: BookService) { }
+  constructor(private router: Router,private auth: AuthService, private books: BookService, private recessions: RecessionService) { }
 
   logOut() {
     sessionStorage.clear();
@@ -25,6 +27,7 @@ export class HomeComponent {
   userData = {} as User;
   userCollection: User[] = [];
   bookCollection: Book[] = [];
+  recessionCollection: Recession[] = [];
   notification: string = "";
 
 
@@ -73,6 +76,24 @@ export class HomeComponent {
       }
     )
   }
+
+
+  toggleRecessions(){
+    this.recessions.getRecessions().subscribe(
+      response => {
+        console.log('here');
+        if(response.length > 0)
+        {
+          this.recessionCollection = response;
+          if(this.activeView!="recessions")
+          {
+            this.activeView="recessions"
+          }
+        }
+      }
+    )
+  }
+
 
   receiveNotification($event: string)
   {

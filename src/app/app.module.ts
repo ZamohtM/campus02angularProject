@@ -21,7 +21,8 @@ import { BooksComponent } from './components/books/books.component';
     HomeComponent,
     ProfileComponent,
     UsersComponent,
-    BooksComponent
+    BooksComponent,
+    RecessionSearchComponent
   ],
   imports: [
     BrowserModule,
