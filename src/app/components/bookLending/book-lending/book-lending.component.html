@@ -1,0 +1,11 @@
+
+<br />
+<table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
+<form [formGroup] = "bookLending" >
+
+<p class="text-danger">Title: <strong>{{ message }}</strong></p>
+  <label for="loanDate">Datum beim Ausborgen</label><br />
+  <input type="text" id ="loanDate" formControlName="loanDate" name="loanDate"/>
+</form>
+
+

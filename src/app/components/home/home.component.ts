@@ -81,4 +81,20 @@ export class HomeComponent {
     alert(this.notification);
   }
 
+  navigateToBib(){
+    this.books.getBooks().subscribe(
+      response => {
+        this.bookCollection = response;
+        if(this.activeView!="bibliothek")
+        {
+          this.activeView="bibliothek"
+        }
+
+      }
+
+    )
+  }
 }
+
+
+
