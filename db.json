@@ -6,6 +6,13 @@
       "book_id": "0",
       "user_id": "0",
       "comment": "0"
+    },
+    {
+      "id": "_id_",
+      "reply_id": "_reply_id_",
+      "book_id": "_book_id_",
+      "user_id": "_user_id_",
+      "comment": "_comment_"
     }
   ],
   "users": [

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-//import { Recession } from '../../interfaces/recession';
-//import { RecessionService } from "../../services/recession.service";
+import { Component, OnInit } from '@angular/core';
+import { Recession } from '../interfaces/recession';
+import { RecessionService } from "../services/recession.service";
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,12 +8,22 @@ import { Router } from '@angular/router';
   templateUrl: './commends.component.html',
   styleUrl: './commends.component.css'
 })
-export class CommendsComponent {
+export class CommendsComponent implements OnInit {
   
-  constructor(private router: Router){}
+  recessions: Recession[] = [];
+  
+  constructor(private router: Router, private recessionService: RecessionService){}
 
   navigateToHome(){
     this.router.navigateByUrl('/home');
+  }
+
+  ngOnInit(): void {
+    this.getRecessions();
+  }
+
+  getRecessions(): void {
+    this.recessionService.getRecessions().subscribe(recessions => this.recessions = recessions);
   }
 
 }

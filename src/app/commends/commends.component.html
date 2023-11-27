@@ -1,5 +1,9 @@
 
 <button label="Home" (click)="navigateToHome()">Home</button>
 
-
+<div *ngFor="let recession of recessions">
+    <h2>{{ recession.id }}</h2>
+    <p>{{ recession.book_id }}</p>
+    <p>{{ recession.comment }}</p>
+   </div>
 

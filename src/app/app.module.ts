@@ -14,6 +14,7 @@ import { RecessionSearchComponent } from './recession-search/recession-search.co
 import { BooksComponent } from './components/books/books.component';
 import { CommendsComponent } from './commends/commends.component';
 import { Router, RouterModule, Routes } from '@angular/router';
+import { CommendCardComponent } from './commend-card/commend-card.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -30,7 +31,8 @@ const appRoutes: Routes = [
     UsersComponent,
     BooksComponent,
     RecessionSearchComponent,
-    CommendsComponent
+    CommendsComponent,
+    CommendCardComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
