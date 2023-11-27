@@ -1,47 +1,27 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, NgModule, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {BookService} from "../../services/book.service";
 import {Book} from "../../interfaces/book";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {DataTablesModule} from "angular-datatables";
 
 @Component({
   selector: 'app-books',
   templateUrl: './books.component.html',
   styleUrl: './books.component.css'
 })
+
 export class BooksComponent implements OnInit{
   constructor(private formBuilder: FormBuilder, private bookService: BookService){}
   @Input() bookCollection: Book[] = [];
   @Input() book = {} as Book;
   editForm!: FormGroup;
   removeForm!:FormGroup;
-  dtOptions: DataTables.Settings = {};
   showEditForm : boolean = false;
   activeForm : string = "";
   editorText : string = "";
 
 
   ngOnInit(): void {
-      console.log('ngOnInit called');
-    this.dtOptions = {
-      data: this.bookCollection,
-      columns: [{
-        title: 'ID',
-        data: 'id'
-      }, {
-        title: 'Titel',
-        data: 'title'
-      }, {
-        title: 'Author',
-        data: 'author'
-      }, {
-        title: 'Year',
-        data: 'year'
-      }, {
-        title: 'Genre',
-        data: 'genre'
-      }]
-    };
-
   this.createEditForm();
   this.createRemoveForm();
   }

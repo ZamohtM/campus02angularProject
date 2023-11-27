@@ -12,6 +12,8 @@ import { UsersComponent } from './components/users/users.component';
 import { DataTablesModule } from "angular-datatables";
 import { RecessionSearchComponent } from './recession-search/recession-search.component';
 import { BooksComponent } from './components/books/books.component';
+import {BooktableComponent} from "./components/booktable/booktable.component";
+
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { BooksComponent } from './components/books/books.component';
     HomeComponent,
     ProfileComponent,
     UsersComponent,
-    BooksComponent
+    BooksComponent,
+    BooktableComponent
   ],
   imports: [
     BrowserModule,
