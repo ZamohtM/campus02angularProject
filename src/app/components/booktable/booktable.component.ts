@@ -30,7 +30,6 @@ export class BooktableComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['bookCollection']) {
-      // Use square bracket notation to access the property
       if (this.dtElement && this.dtElement.dtInstance) {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.clear();
