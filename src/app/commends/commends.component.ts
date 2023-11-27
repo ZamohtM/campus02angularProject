@@ -9,5 +9,11 @@ import { Router } from '@angular/router';
   styleUrl: './commends.component.css'
 })
 export class CommendsComponent {
+  
+  constructor(private router: Router){}
+
+  navigateToHome(){
+    this.router.navigateByUrl('/home');
+  }
 
 }
