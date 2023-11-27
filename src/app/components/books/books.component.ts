@@ -1,8 +1,13 @@
-import {Component, EventEmitter, Input, NgModule, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {BookService} from "../../services/book.service";
 import {Book} from "../../interfaces/book";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DataTablesModule} from "angular-datatables";
+import {DataTableDirective} from "angular-datatables";
 
 @Component({
   selector: 'app-books',
@@ -19,15 +24,16 @@ export class BooksComponent implements OnInit{
   showEditForm : boolean = false;
   activeForm : string = "";
   editorText : string = "";
-
-
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement!: DataTableDirective;
   ngOnInit(): void {
+
+    this.updateBookCollection();
   this.createEditForm();
   this.createRemoveForm();
   }
 
   addBook() {
-    const randomId = this.generateUniqueRandomId();
     this.book = {
       id: this.generateUniqueRandomId(),
       title: this.title.value,
@@ -37,7 +43,9 @@ export class BooksComponent implements OnInit{
     };
     this.bookService.addBook(this.book).subscribe(
       (response) => {
+        this.updateBookCollection();
         console.log('Book added successfully:', response);
+
       },
       (error) => {
         console.error('Error adding book:', error);
@@ -46,7 +54,8 @@ export class BooksComponent implements OnInit{
   }
   removeBook(){
     console.log("removed book")
-    this.bookService.removeBook(this.id).subscribe();
+    this.bookService.removeBook(this.id).subscribe(response =>{this.updateBookCollection();});
+
   }
   editBook(){
     this.bookService.editBook(this.id, {
@@ -55,8 +64,7 @@ export class BooksComponent implements OnInit{
       author: this.author.value,
       year: this.year.value,
       genre: this.genre.value,
-    }).subscribe();
-
+    }).subscribe(response =>{this.updateBookCollection();});
   }
 
   private createEditForm(){
@@ -120,7 +128,7 @@ export class BooksComponent implements OnInit{
                 response => {
                     if (Array.isArray(response) && response.length > 0) {
                         const bookData = response[0];
-                        // Update the form controls with the new values
+
                         this.editForm.patchValue({
                             title: bookData.title,
                             author: bookData.author,
@@ -128,7 +136,6 @@ export class BooksComponent implements OnInit{
                             genre: bookData.genre,
                         });
 
-                        // Show the edit form
                         this.showEditForm = true;
                     } else {
                         console.error('Invalid or empty API response.');
@@ -164,7 +171,6 @@ export class BooksComponent implements OnInit{
   }
 
   private generateRandomId(): string {
-    // this example generates a random string of 8 characters.
     const randomId = Math.random().toString(36).substring(2, 10);
     return randomId;
   }
@@ -191,7 +197,6 @@ export class BooksComponent implements OnInit{
     );
     return exists;
   }
-
   updateBookCollection()
   {
     this.bookService.getBooks().subscribe(
@@ -204,12 +209,6 @@ export class BooksComponent implements OnInit{
         console.error('Error fetching updated book collection:', error);
       }
     );
-  }
-
-
-  private updateDataTable() {
-    // Update the DataTable options with the new book collection
-
   }
 }
 
