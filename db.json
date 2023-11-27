@@ -1,17 +1,13 @@
 {
-
   "recessions": [
     {
       "id": "0",
-    "reply_id": "0",
-    "book_id": "0",
-    "user_id": "0",
-    "comment": "0" 
-  } 
+      "reply_id": "0",
+      "book_id": "0",
+      "user_id": "0",
+      "comment": "0"
+    }
   ],
-  
-
-
   "users": [
     {
       "id": 3,
@@ -1522,10 +1518,10 @@
     },
     {
       "id": "18",
-      "title": "Moby-Dick",
+      "title": "Moby-Fick",
       "author": "Herman Melville",
-      "genre": "Adventure",
-      "year": "1851"
+      "year": "1851",
+      "genre": "Adventure"
     },
     {
       "id": "19",

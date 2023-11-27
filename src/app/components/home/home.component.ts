@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/auth';
 import {BookService} from "../../services/book.service";
 import {Book} from "../../interfaces/book";
 import { Recession } from '../../interfaces/recession';
 import { RecessionService } from "../../services/recession.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -94,6 +94,9 @@ export class HomeComponent {
     )
   }
 
+  navigateToCommends(){
+    this.router.navigateByUrl('/commends');
+  }
 
   receiveNotification($event: string)
   {
