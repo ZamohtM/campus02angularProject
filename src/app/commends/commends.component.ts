@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Recession } from '../interfaces/recession';
 import { RecessionService } from "../services/recession.service";
 import { Router } from '@angular/router';
@@ -10,8 +10,9 @@ import { Router } from '@angular/router';
 })
 export class CommendsComponent implements OnInit {
   
-  recessions: Recession[] = [];
-  
+  recessionCollection: Recession[] = [];
+  dtOptions: DataTables.Settings = {};
+
   constructor(private router: Router, private recessionService: RecessionService){}
 
   navigateToHome(){
@@ -19,11 +20,24 @@ export class CommendsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.getRecessions();
+    
+    this.dtOptions = {
+      data: this.recessionCollection,
+      columns: [
+        {title: 'ID', data: 'id'}, 
+        {title: 'Antwort auf',data: 'reply_id'}, 
+        {title: 'Buch', data: 'book_id'}, 
+        {title: 'User', data: 'user_id'}, 
+        {title: 'Kommentar', data: 'comment'}]
+    };
+
+    
   }
 
   getRecessions(): void {
-    this.recessionService.getRecessions().subscribe(recessions => this.recessions = recessions);
+    this.recessionService.getRecessions().subscribe(recessions => {this.recessionCollection = recessions});
   }
 
 }
