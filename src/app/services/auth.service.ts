@@ -34,4 +34,8 @@ export class AuthService {
     return this.http.get<User[]>(`${this.dbUrl}/users`);
   }
 
+  getUserById(userId: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.dbUrl}/users/${userId}`);
+  }
+
 }

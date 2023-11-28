@@ -1,11 +1,20 @@
-
 <br />
 <table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
 <form [formGroup] = "bookLending" >
 
-<p class="text-danger">Title: <strong>{{ message }}</strong></p>
-  <label for="loanDate">Datum beim Ausborgen</label><br />
-  <input type="text" id ="loanDate" formControlName="loanDate" name="loanDate"/>
+  <label [ngSwitch]="lendStatus">
+    <span *ngSwitchCase="'0'"><strong>Buch verfügbar</strong></span>
+    <span *ngSwitchCase="'1'"><strong>Buch nicht verfügbar</strong></span>
+  </label>
+<p>Title: <strong>{{ message }}</strong></p>
+  <p>Datum letzte Ausleihe: {{ loanDate }}</p>
+  <p>Datum letzte Rückgabe: {{ returnDate }}</p>
+
+  <label [ngSwitch]="bookCondition">
+    <span *ngSwitchCase="'0'"><strong>Buch neuwertig</strong></span>
+    <span *ngSwitchCase="'1'"><strong>Buch abgegriffen</strong></span>
+    <span *ngSwitchCase="'2'"><strong>Buch starke Abnutzungen</strong></span>
+    <span *ngSwitchCase="''"><strong>Buch Abnutzgrad unbekannt</strong></span>
+  </label>
+  <p>Letzter User:  {{ lastUser }}</p>
 </form>
-
-
