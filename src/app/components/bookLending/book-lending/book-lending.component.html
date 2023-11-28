@@ -8,7 +8,10 @@
   </label>
 <p>Title: <strong>{{ message }}</strong></p>
   <p>Datum letzte Ausleihe: {{ loanDate }}</p>
-  <p>Datum letzte Rückgabe: {{ returnDate }}</p>
+  <p>Datum Rückgabe: {{ returnDate }}</p>
+
+
+
 
   <label [ngSwitch]="bookCondition">
     <span *ngSwitchCase="'0'"><strong>Buch neuwertig</strong></span>
@@ -17,4 +20,9 @@
     <span *ngSwitchCase="''"><strong>Buch Abnutzgrad unbekannt</strong></span>
   </label>
   <p>Letzter User:  {{ lastUser }}</p>
+
+  <button (click)="bookLendingManagement(lendStatus)">
+    {{ lendStatus === '0' ? 'Buch ausborgen' : (lendStatus === '1' ? 'Buch zurückgeben' : 'Buch ausborgen') }}
+  </button>
+  <button label="Bibliothekseintrag löschen" (click)="removeBibData()">Bibliothekseintrag löschen</button>
 </form>
