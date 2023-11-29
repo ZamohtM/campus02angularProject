@@ -18,7 +18,7 @@
   </ng-container>
 
   <ng-container *ngSwitchCase="'books'">
-    <app-books [bookCollection]="bookCollection"></app-books>
+    <app-books [bookCollection]="bookCollection" (notificationEvent)="receiveNotification($event)"></app-books>
   </ng-container>
 
   <!-- Add more ngSwitchCase as needed for other states -->

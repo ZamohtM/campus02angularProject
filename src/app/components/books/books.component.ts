@@ -1,7 +1,7 @@
 import {
-  Component,
+  Component, EventEmitter,
   Input,
-  OnInit,
+  OnInit, Output,
   ViewChild
 } from '@angular/core';
 import {BookService} from "../../services/book.service";
@@ -19,6 +19,7 @@ export class BooksComponent implements OnInit{
   constructor(private formBuilder: FormBuilder, private bookService: BookService){}
   @Input() bookCollection: Book[] = [];
   @Input() book = {} as Book;
+  @Output() notificationEvent = new EventEmitter<string>();
   editForm!: FormGroup;
   removeForm!:FormGroup;
   showEditForm : boolean = false;
@@ -45,16 +46,16 @@ export class BooksComponent implements OnInit{
       (response) => {
         this.updateBookCollection();
         console.log('Book added successfully:', response);
-
-      },
-      (error) => {
-        console.error('Error adding book:', error);
+        this.sendNotification("add");
       }
     );
   }
   removeBook(){
     console.log("removed book")
-    this.bookService.removeBook(this.id).subscribe(response =>{this.updateBookCollection();});
+    this.bookService.removeBook(this.id).subscribe(response =>{
+      this.updateBookCollection();
+      this.sendNotification("remove");
+    });
 
   }
   editBook(){
@@ -64,7 +65,10 @@ export class BooksComponent implements OnInit{
       author: this.author.value,
       year: this.year.value,
       genre: this.genre.value,
-    }).subscribe(response =>{this.updateBookCollection();});
+    }).subscribe(response =>{
+      this.updateBookCollection();
+      this.sendNotification("edit");
+    });
   }
 
   private createEditForm(){
@@ -209,6 +213,25 @@ export class BooksComponent implements OnInit{
         console.error('Error fetching updated book collection:', error);
       }
     );
+  }
+
+  sendNotification(notificationType:string)
+  {
+    let notification = ""
+    if (notificationType=="add")
+    {
+      notification = "Buch hinzugefügt"
+    }
+    if (notificationType=="edit")
+    {
+      notification = "Buch bearbeitet"
+    }
+    if (notificationType=="remove")
+    {
+      notification = "Buch entfernt"
+    }
+
+    this.notificationEvent.emit(notification);
   }
 }
 

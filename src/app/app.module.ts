@@ -14,7 +14,6 @@ import { RecessionSearchComponent } from './recession-search/recession-search.co
 import { BooksComponent } from './components/books/books.component';
 import {BooktableComponent} from "./components/booktable/booktable.component";
 
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -76,7 +76,6 @@ export class HomeComponent {
 
   receiveNotification($event: string)
   {
-    this.activeView="";
     this.notification = $event;
     alert(this.notification);
   }
