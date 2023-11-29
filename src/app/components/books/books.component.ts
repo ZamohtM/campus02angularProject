@@ -57,7 +57,7 @@ export class BooksComponent implements OnInit{
 
   }
   editBook(){
-    this.bookService.editBook(this.id, {
+    this.bookService.editBook(this.book.id, {
       id: this.book.id,
       title: this.book.title,
       author: this.book.author,
