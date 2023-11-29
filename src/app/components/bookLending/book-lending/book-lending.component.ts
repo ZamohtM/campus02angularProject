@@ -133,6 +133,7 @@ export class BookLendingComponent {
   }
 
   bookLendingManagement(lendStatus: string): void {
+    let tempId: string = "";
     if (lendStatus === '0') {
 
       this.bookLendingService.getLendStatusByBookId(this.bookLending.controls['book_id'].value).subscribe(response => {
@@ -153,11 +154,12 @@ export class BookLendingComponent {
             console.log(error);
             alert("Fehler!");
           });
-        }
-        else {
+          this.RefreshUc(this.bibData);
+        } else {
 
+          tempId = this.GenerateUniqueId();
           this.lendingDataEntry = {
-            id: this.GenerateUniqueId(),
+            id: tempId,
             lendStatus: '1',
             loanDate: this.GetDate(),
             returnDate: '',
@@ -165,12 +167,11 @@ export class BookLendingComponent {
             user_id: this.lastUser,
             bookCondition: '1'
           }
-          console.log(this.bookId)
-          console.log("Buch ausborgen")
           this.bookLendingService.addBookToBib(this.lendingDataEntry).subscribe()
+          console.log("Buch Datum angelegt")
+          this.RefreshUc(this.lendingDataEntry);
         }
       })
-
     } else if (lendStatus === '1') {
       console.log(this.bibData)
       this.bibData = {
@@ -189,7 +190,17 @@ export class BookLendingComponent {
         console.log(error);
         alert("Fehler!");
       });
+      tempId = this.bookLending.controls['id'].value;
     }
+    this.RefreshUc(this.bibData);
+  }
+
+  private RefreshUc(tempBibData: bookLending): void {
+
+    this.loanDate = tempBibData.loanDate
+    this.lendStatus = tempBibData.lendStatus
+    this.returnDate = tempBibData.returnDate
+    this.bookCondition = tempBibData.bookCondition
   }
 
   GenerateUniqueId(): string {
