@@ -22,21 +22,34 @@ export class CommendsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.recessionService.getRecessions().subscribe(Response => {this.reviewCollection = Response});
-   
   }
 
-  ShowCommendList(){
-    this.recessionService.getRecessions().subscribe(
-      response => {
-          this.reviewCollection = response;
+  // ShowCommendList(){
+  //   this.recessionService.getRecessions().subscribe(
+  //     response => {
+  //         this.reviewCollection = response;
+  //         this.showList = !this.showList;
+  //         console.log("showlist: "+this.showList);
+  //     }
+  //   )
+  // }
+
+  ToggleCommendList(){
           this.showList = !this.showList;
-          console.log("showlist: "+this.showList);
-        
-      }
-    )
   }
+
+  SelectedID: string="";
+
+  GetID(id: string) {
+    this.SelectedID= id;
+    console.log("GOT ITEM IN PARENT"+ id);
+  }
+  // items = ['item1', 'item2', 'item3', 'item4'];
+
+  // addItem(newItem: string) {
+  //   this.items.push(newItem);
+  // }
 }
 
 
