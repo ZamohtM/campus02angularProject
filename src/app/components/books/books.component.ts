@@ -8,6 +8,7 @@ import {BookService} from "../../services/book.service";
 import {Book} from "../../interfaces/book";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DataTableDirective} from "angular-datatables";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-books',
@@ -16,13 +17,12 @@ import {DataTableDirective} from "angular-datatables";
 })
 
 export class BooksComponent implements OnInit{
-  constructor(private formBuilder: FormBuilder, private bookService: BookService){}
+  constructor(private formBuilder: FormBuilder, private bookService: BookService, private router: Router){}
   @Input() bookCollection: Book[] = [];
-  @Input() book = {} as Book;
-  @Output() notificationEvent = new EventEmitter<string>();
+  @Input() inputBook: Book = {} as Book;
+  book = {} as Book;
   editForm!: FormGroup;
   removeForm!:FormGroup;
-  showEditForm : boolean = false;
   activeForm : string = "";
   editorText : string = "";
   @ViewChild(DataTableDirective, { static: false })
@@ -45,14 +45,12 @@ export class BooksComponent implements OnInit{
     this.bookService.addBook(this.book).subscribe(
       (response) => {
         this.updateBookCollection();
-        console.log('Book added successfully:', response);
         this.sendNotification("add");
       }
     );
   }
   removeBook(){
-    console.log("removed book")
-    this.bookService.removeBook(this.id).subscribe(response =>{
+    this.bookService.removeBook(this.book.id).subscribe(response =>{
       this.updateBookCollection();
       this.sendNotification("remove");
     });
@@ -60,11 +58,11 @@ export class BooksComponent implements OnInit{
   }
   editBook(){
     this.bookService.editBook(this.id, {
-      id: this.id,
-      title: this.title.value,
-      author: this.author.value,
-      year: this.year.value,
-      genre: this.genre.value,
+      id: this.book.id,
+      title: this.book.title,
+      author: this.book.author,
+      year: this.book.year,
+      genre: this.book.genre,
     }).subscribe(response =>{
       this.updateBookCollection();
       this.sendNotification("edit");
@@ -107,49 +105,29 @@ export class BooksComponent implements OnInit{
   }
   toggleEditForm()
   {
+  this.refreshForm();
+
     if (this.activeForm!="edit")
     {
-      this.showEditForm=false;
       this.activeForm="edit";
     }
     else {
       this.activeForm="";
     }
+
   }
-  toggleRemoveForm()
+
+  refreshForm()
   {
-    if (this.activeForm!="remove")
-    {
-      this.activeForm="remove";
-    }
-    else {
-      this.activeForm="";
-    }
+    this.editForm.patchValue({
+      title: this.book.title,
+      author: this.book.author,
+      year: this.book.year,
+      genre: this.book.genre,
+    });
   }
 
-    toggleEditButton() {
-            this.bookService.getBookById(this.id).subscribe(
-                response => {
-                    if (Array.isArray(response) && response.length > 0) {
-                        const bookData = response[0];
 
-                        this.editForm.patchValue({
-                            title: bookData.title,
-                            author: bookData.author,
-                            year: bookData.year,
-                            genre: bookData.genre,
-                        });
-
-                        this.showEditForm = true;
-                    } else {
-                        console.error('Invalid or empty API response.');
-                    }
-                },
-                error => {
-                    console.error('Error fetching book by ID:', error);
-                }
-            );
-    }
   get id()
   {
     return this.editorText
@@ -206,11 +184,6 @@ export class BooksComponent implements OnInit{
     this.bookService.getBooks().subscribe(
       (books) => {
         this.bookCollection = books;
-
-        console.log('Updated book collection:', this.bookCollection);
-      },
-      (error) => {
-        console.error('Error fetching updated book collection:', error);
       }
     );
   }
@@ -231,7 +204,18 @@ export class BooksComponent implements OnInit{
       notification = "Buch entfernt"
     }
 
-    this.notificationEvent.emit(notification);
+    alert(notification);
+  }
+
+  receiveBook($event: Book)
+  {
+    this.book= $event;
+    this.refreshForm();
+  }
+
+  navigateToHome()
+  {
+    this.router.navigate(['home']);
   }
 }
 

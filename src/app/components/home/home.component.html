@@ -3,7 +3,7 @@
 
 <button label="Mitgleider" (click)="toggleUsers()">Mitglieder</button>
 
-<button label="Bücher" (click)="toggleBooks()">Bücher</button>
+<button label="Bücher" (click)="navigateToBooks()">Bücher</button>
 
 <button label="Bibliothek" (click)="navigateToBib()">Bibliothek</button>
 
@@ -19,9 +19,6 @@
     <app-users [userCollection]="userCollection"></app-users>
   </ng-container>
 
-  <ng-container *ngSwitchCase="'books'">
-    <app-books [bookCollection]="bookCollection" (notificationEvent)="receiveNotification($event)"></app-books>
-  </ng-container>
 
   <ng-container *ngSwitchCase="'bibliothek'">
     <app-book-lending [bookCollection]="bookCollection"></app-book-lending>
