@@ -1610,11 +1610,20 @@
       "bookCondition": "1"
     },
     {
-      "id": "89546024",
+      "id": "30204826",
       "lendStatus": "1",
-      "loanDate": "29.11.2023",
-      "returnDate": "",
-      "book_id": "01234567",
+      "loanDate": "30.11.2023",
+      "returnDate": "30.11.2023",
+      "book_id": "12348756",
+      "user_id": "McCuffie",
+      "bookCondition": "1"
+    },
+    {
+      "id": "66928328",
+      "lendStatus": "0",
+      "loanDate": "30.11.2023",
+      "returnDate": "30.11.2023",
+      "book_id": "24681359",
       "user_id": "McCuffie",
       "bookCondition": "1"
     }
