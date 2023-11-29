@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Book} from "../../../interfaces/book";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BookService} from "../../../services/book.service";
@@ -11,7 +11,7 @@ import {AuthService} from "../../../services/auth.service";
   templateUrl: './book-lending.component.html',
   styleUrl: './book-lending.component.css'
 })
-export class BookLendingComponent {
+export class BookLendingComponent implements OnInit {
 
   lendStatus: string = "";
   loanDate: string = "";
@@ -21,7 +21,6 @@ export class BookLendingComponent {
 
   constructor(private formBuilder: FormBuilder, private bookLendingService: BookLendingService, private authService: AuthService) {
   }
-
   bookId: string = ''
   bookLending!: FormGroup;
   clickedBook: string = "";
@@ -33,10 +32,9 @@ export class BookLendingComponent {
   dtOptions: DataTables.Settings = {};
 
   someClickHandler(info: any): void {
-
+console.log(info.id)
     this.bookLendingService.getLendStatusByBookId(info.id).subscribe(response => {
       if (Array.isArray(response) && response.length > 0) {
-        console.log();
         this.bookLending.patchValue({
           id: response[0].id,
           title: info.title,
@@ -44,7 +42,7 @@ export class BookLendingComponent {
           returnDate: response[0].returnDate,
           book_id: response[0].book_id,
           lendStatus: response[0].lendStatus,
-          bookCondition: response[0].bookCondition
+          bookCondition: response[0].bookCondition,
 
         })
         this.loanDate = response[0].loanDate
@@ -53,6 +51,7 @@ export class BookLendingComponent {
         this.bookCondition = response[0].bookCondition
 
       } else {
+        this.bookId = info.id
         this.resetLabels();
         this.bookLending.patchValue({
           lendStatus: "0"
@@ -136,18 +135,19 @@ export class BookLendingComponent {
     let tempId: string = "";
     if (lendStatus === '0') {
 
-      this.bookLendingService.getLendStatusByBookId(this.bookLending.controls['book_id'].value).subscribe(response => {
+      this.bookLendingService.getLendStatusByBookId(this.bookId).subscribe(response => {
         if (Array.isArray(response) && response.length > 0) {
-
+          console.log("Jetzt kommt ein Buch, welches schon angelegt ist und nochmals ausgeborgt ist. ID", this.bookId)
           this.bibData = {
-            id: this.bookLending.controls['id'].value,
+            id: response[0].id,
             lendStatus: '1',
             loanDate: this.GetDate(),
             returnDate: this.bookLending.controls['loanDate'].value,
-            book_id: this.bookLending.controls['book_id'].value,
+            book_id: this.bookId,
             user_id: this.lastUser,
             bookCondition: this.bookLending.controls['bookCondition'].value
           }
+          console.log(this.bibData)
           this.bookLendingService.updateBibData(this.bookLending.controls['id'].value, this.bibData as bookLending).subscribe(response => {
             console.log(response);
           }, error => {
@@ -156,7 +156,6 @@ export class BookLendingComponent {
           });
           this.RefreshUc(this.bibData);
         } else {
-
           tempId = this.GenerateUniqueId();
           this.lendingDataEntry = {
             id: tempId,
@@ -173,13 +172,14 @@ export class BookLendingComponent {
         }
       })
     } else if (lendStatus === '1') {
+      console.log("ganz Falsch")
       console.log(this.bibData)
       this.bibData = {
         id: this.bookLending.controls['id'].value,
         lendStatus: '0',
         loanDate: this.bookLending.controls['loanDate'].value,
         returnDate: this.GetDate(),
-        book_id: this.bookLending.controls['book_id'].value,
+        book_id: this.bookId,
         user_id: this.lastUser,
         bookCondition: this.bookLending.controls['bookCondition'].value
       }
@@ -191,12 +191,13 @@ export class BookLendingComponent {
         alert("Fehler!");
       });
       tempId = this.bookLending.controls['id'].value;
+      this.RefreshUc(this.bibData);
     }
-    this.RefreshUc(this.bibData);
+
   }
 
   private RefreshUc(tempBibData: bookLending): void {
-
+    console.log("refreshUC")
     this.loanDate = tempBibData.loanDate
     this.lendStatus = tempBibData.lendStatus
     this.returnDate = tempBibData.returnDate
