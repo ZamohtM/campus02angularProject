@@ -7,6 +7,8 @@ import { authGuard } from './guards/auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { UsersComponent } from './components/users/users.component';
 import {BooksComponent} from "./components/books/books.component";
+import {BooktableComponent} from "./components/booktable/booktable.component";
+import {BookLendingComponent} from "./components/bookLending/book-lending/book-lending.component";
 
 const routes: Routes = [
   {
@@ -35,6 +37,16 @@ const routes: Routes = [
   {
     path:'books',
     component:BooksComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path:'booktable',
+    component:BooktableComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path:'bibliothek',
+    component:BookLendingComponent,
     canActivate: [authGuard]
   },
   {

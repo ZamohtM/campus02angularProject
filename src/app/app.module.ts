@@ -12,16 +12,9 @@ import { UsersComponent } from './components/users/users.component';
 import { DataTablesModule } from "angular-datatables";
 import { RecessionSearchComponent } from './recession-search/recession-search.component';
 import { BooksComponent } from './components/books/books.component';
-import { BookLendingComponent } from './components/bookLending/book-lending/book-lending.component';
+import {BooktableComponent} from "./components/booktable/booktable.component";
+import {BookLendingComponent} from "./components/bookLending/book-lending/book-lending.component";
 
-
-
-import { Router, RouterModule, Routes } from '@angular/router';
-
-const appRoutes: Routes = [
-  { path: 'home', component: HomeComponent},
-  { path: 'bibliothek', component: BookLendingComponent}
-]
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +24,7 @@ const appRoutes: Routes = [
     ProfileComponent,
     UsersComponent,
     BooksComponent,
+    BooktableComponent,
     BookLendingComponent
   ],
   imports: [
@@ -39,8 +33,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     DataTablesModule,
-    FormsModule,
-    RouterModule.forRoot(appRoutes),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

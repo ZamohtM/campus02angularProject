@@ -36,6 +36,7 @@ export class BookLendingComponent {
 
     this.bookLendingService.getLendStatusByBookId(info.id).subscribe(response => {
       if (Array.isArray(response) && response.length > 0) {
+        console.log();
         this.bookLending.patchValue({
           id: response[0].id,
           title: info.title,
