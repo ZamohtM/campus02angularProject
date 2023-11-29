@@ -12,7 +12,7 @@ import {Book} from "../../interfaces/book";
 })
 export class HomeComponent {
 
-  constructor(private router: Router,private auth: AuthService) { }
+  constructor(private router: Router,private auth: AuthService, private books: BookService) { }
 
   logOut() {
     sessionStorage.clear();
@@ -28,6 +28,7 @@ export class HomeComponent {
   activeView: string = ""; //Profile,Users,Books
   userData = {} as User;
   userCollection: User[] = [];
+  bookCollection: Book[] = [];
   notification: string = "";
 
 
