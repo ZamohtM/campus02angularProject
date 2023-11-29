@@ -1,11 +1,12 @@
+<button label="Home" (click)="navigateToHome()">Home</button>
 <h2>Bücher</h2>
 <div>
-  <app-book-table [bookCollection]="bookCollection"></app-book-table>
+  <app-book-table [bookCollection]="bookCollection" (outputBook)="receiveBook($event)"></app-book-table>
 </div>
 <div>
   <button label="Buch hinzufügen" (click)="toggleCreateForm()">Buch hinzufügen</button>
   <button label="Buch bearbeiten" (click)="toggleEditForm()">Buch bearbeiten</button>
-  <button label="Buch entfernen" (click)="toggleRemoveForm()">Buch entfernen</button>
+  <button label="Buch entfernen" (click)="removeBook()">Buch entfernen</button>
 </div>
 <div [ngSwitch]="activeForm">
   <ng-container *ngSwitchCase="'create'">
@@ -47,16 +48,8 @@
 
   <ng-container *ngSwitchCase="'edit'">
   <h4>Buch bearbeiten</h4>
-    <div>
-      <p>ID:</p>
-    <textarea [(ngModel)]="editorText">
-    </textarea>
-      </div>
-    <div>
-    <button label="Buch wählen" (click)="toggleEditButton()">Buch wählen</button>
-    </div>
 
-    <div *ngIf="showEditForm">
+
     <form [formGroup] = "editForm" (ngSubmit)="editBook()">
       <div>
         <label for="editTitle">Title</label><br />
@@ -90,21 +83,8 @@
       </div>
       <button label="Bearbeiten" (click)="editBook()" [disabled]="editForm.invalid">Bearbeiten</button>
     </form>
-    </div>
-  </ng-container>
 
-  <ng-container *ngSwitchCase="'remove'">
-    <h4>Buch entfernen</h4>
-    <div>
-      <p>ID:</p>
-      <textarea [(ngModel)]="editorText">
-    </textarea>
-    </div>
-    <div>
-      <button label="Entfernen" (click)="removeBook()" >Buch entfernen</button>
-    </div>
   </ng-container>
-
   <ng-container *ngSwitchDefault>
 
   </ng-container>

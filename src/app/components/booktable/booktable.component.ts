@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild,} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild,} from '@angular/core';
 import {Book} from "../../interfaces/book";
 import {DataTableDirective} from "angular-datatables";
 
@@ -10,10 +10,10 @@ import {DataTableDirective} from "angular-datatables";
 export class BooktableComponent implements OnInit, OnChanges {
   dtOptions: DataTables.Settings = {};
   @Input() bookCollection: Book[] = [];
+  @Output() outputBook = new EventEmitter<Book>();
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
-
-
+  book: Book ={} as Book;
   ngOnInit(): void {
     this.dtOptions = {
       data: this.bookCollection,
@@ -25,6 +25,14 @@ export class BooktableComponent implements OnInit, OnChanges {
         {title: 'Year', data: 'year'},
         {title: 'Genre', data: 'genre'},
       ],
+      rowCallback: (row: Node, data: any[] | Object, index: number) => {
+        const self = this;
+        $('td', row).off('click');
+        $('td', row).on('click', () => {
+          self.someClickHandler(data);
+        });
+        return row;
+      }
     };
   }
 
@@ -39,4 +47,14 @@ export class BooktableComponent implements OnInit, OnChanges {
       }
     }
   }
+  someClickHandler(info: any): void {
+    this.book= info;
+    this.sendBook();
+  }
+
+  sendBook()
+  {
+    this.outputBook.emit(this.book);
+  }
+
 }

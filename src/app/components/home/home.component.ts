@@ -12,7 +12,7 @@ import {Book} from "../../interfaces/book";
 })
 export class HomeComponent {
 
-  constructor(private router: Router,private auth: AuthService, private books: BookService) { }
+  constructor(private router: Router,private auth: AuthService) { }
 
   logOut() {
     sessionStorage.clear();
@@ -20,11 +20,14 @@ export class HomeComponent {
     alert("Abmeldung erfolgreich.")
   }
 
+  navigateToBooks() {
+    this.router.navigate(['books']);
+  }
+
 
   activeView: string = ""; //Profile,Users,Books
   userData = {} as User;
   userCollection: User[] = [];
-  bookCollection: Book[] = [];
   notification: string = "";
 
 
@@ -58,7 +61,7 @@ export class HomeComponent {
       }
     )
   }
-
+/* //use for pipeline routing
   toggleBooks(){
     this.books.getBooks().subscribe(
       response => {
@@ -73,7 +76,7 @@ export class HomeComponent {
       }
     )
   }
-
+*/
   receiveNotification($event: string)
   {
     this.notification = $event;
