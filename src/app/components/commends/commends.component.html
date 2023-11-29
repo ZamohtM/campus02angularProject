@@ -1,0 +1,8 @@
+
+<button label="Home" (click)="navigateToHome()">Home</button>
+
+<button label="Liste" (click)="ShowCommendList()">Kommentarliste</button>
+
+<ng-container *ngIf="showList">
+    <commend-list [reviewCollection]="reviewCollection"></commend-list>
+  </ng-container>

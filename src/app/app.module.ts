@@ -12,9 +12,10 @@ import { UsersComponent } from './components/users/users.component';
 import { DataTablesModule } from "angular-datatables";
 import { RecessionSearchComponent } from './recession-search/recession-search.component';
 import { BooksComponent } from './components/books/books.component';
-import { CommendsComponent } from './commends/commends.component';
+import { CommendsComponent } from './components/commends/commends.component';
 import { Router, RouterModule, Routes } from '@angular/router';
-import { CommendCardComponent } from './commend-card/commend-card.component';
+import { CommendCardComponent } from './components/commend-card/commend-card.component';
+import { CommendListComponent } from './components/commend-list/commend-list.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
     BooksComponent,
     RecessionSearchComponent,
     CommendsComponent,
-    CommendCardComponent
+    CommendCardComponent,
+    CommendListComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

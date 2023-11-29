@@ -8,7 +8,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { UsersComponent } from './components/users/users.component';
 import {BooksComponent} from "./components/books/books.component";
 import { RecessionSearchComponent } from './recession-search/recession-search.component';
-import { CommendsComponent } from './commends/commends.component';
+import { CommendsComponent } from './components/commends/commends.component';
 
 const routes: Routes = [
   {

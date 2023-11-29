@@ -1,0 +1,11 @@
+
+<div *ngFor="let r of reviewCollection">
+    <h2>{{ r.id }}</h2>
+    <p>{{ r.book_id }}</p>
+    <p>{{ r.comment }}</p>
+</div>
+
+
+<div>
+    <table [dtOptions]="dtOptions" datatable class="row-border hover"></table>
+</div>
