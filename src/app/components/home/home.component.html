@@ -20,7 +20,7 @@
   </ng-container>
 
   <ng-container *ngSwitchCase="'books'">
-    <app-books [bookCollection]="bookCollection"></app-books>
+    <app-books [bookCollection]="bookCollection" (notificationEvent)="receiveNotification($event)"></app-books>
   </ng-container>
 
   <ng-container *ngSwitchCase="'bibliothek'">
