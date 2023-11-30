@@ -80,9 +80,7 @@ export class HomeComponent {
       }
     )
   }
-<<<<<<< HEAD
 */
-=======
 
 
   toggleRecessions(){
@@ -105,7 +103,6 @@ export class HomeComponent {
     this.router.navigateByUrl('/commends');
   }
 
->>>>>>> Rezession
   receiveNotification($event: string)
   {
     this.notification = $event;
