@@ -1455,8 +1455,8 @@
       "id": "25983614",
       "title": "The Da Vinci Code",
       "author": "Dan Brown",
-      "genre": "Mystery",
-      "year": "2003"
+      "year": "2003",
+      "genre": "Mystery"
     },
     {
       "id": "63415982",
@@ -1497,8 +1497,8 @@
       "id": "23987465",
       "title": "The Road",
       "author": "Cormac McCarthy",
-      "genre": "Post-Apocalyptic",
-      "year": "2006"
+      "year": "2006",
+      "genre": "Post-Apocalyptic"
     },
     {
       "id": "78163294",
@@ -1511,8 +1511,8 @@
       "id": "45682379",
       "title": "Moby-Dick",
       "author": "Herman Melville",
-      "genre": "Adventure",
-      "year": "1851"
+      "year": "1851",
+      "genre": "Adventure"
     },
     {
       "id": "54329817",
@@ -1532,8 +1532,8 @@
       "id": "12458796",
       "title": "Brave New World",
       "author": "Aldous Huxley",
-      "genre": "Dystopian",
-      "year": "1932"
+      "year": "1932",
+      "genre": "Dystopian"
     },
     {
       "id": "78965432",

@@ -18,7 +18,7 @@ import {Router} from "@angular/router";
 
 export class BooksComponent implements OnInit{
   constructor(private formBuilder: FormBuilder, private bookService: BookService, private router: Router){}
-  @Input() bookCollection: Book[] = [];
+  @Output() bookCollection: Book[] = [];
   @Input() inputBook: Book = {} as Book;
   book = {} as Book;
   editForm!: FormGroup;
@@ -59,10 +59,10 @@ export class BooksComponent implements OnInit{
   editBook(){
     this.bookService.editBook(this.book.id, {
       id: this.book.id,
-      title: this.book.title,
-      author: this.book.author,
-      year: this.book.year,
-      genre: this.book.genre,
+      title: this.title.value,
+      author: this.author.value,
+      year: this.year.value,
+      genre: this.genre.value,
     }).subscribe(response =>{
       this.updateBookCollection();
       this.sendNotification("edit");

@@ -50,7 +50,7 @@
   <h4>Buch bearbeiten</h4>
 
 
-    <form [formGroup] = "editForm" (ngSubmit)="editBook()">
+    <form [formGroup] = "editForm" >
       <div>
         <label for="editTitle">Title</label><br />
         <input type="text" id ="editTitle" formControlName="title" name="title"/>
