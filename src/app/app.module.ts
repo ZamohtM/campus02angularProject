@@ -14,6 +14,15 @@ import { RecessionSearchComponent } from './recession-search/recession-search.co
 import { BooksComponent } from './components/books/books.component';
 import {BooktableComponent} from "./components/booktable/booktable.component";
 import {BookLendingComponent} from "./components/bookLending/book-lending/book-lending.component";
+import { CommendsComponent } from './components/commends/commends.component';
+import { Router, RouterModule, Routes } from '@angular/router';
+import { CommendCardComponent } from './components/commend-card/commend-card.component';
+import { CommendListComponent } from './components/commend-list/commend-list.component';
+
+const appRoutes: Routes = [
+  { path: 'home', component: HomeComponent},
+  { path: 'commends', component: CommendsComponent}
+]
 
 @NgModule({
   declarations: [
@@ -25,9 +34,14 @@ import {BookLendingComponent} from "./components/bookLending/book-lending/book-l
     UsersComponent,
     BooksComponent,
     BooktableComponent,
-    BookLendingComponent
+    BookLendingComponent,
+    RecessionSearchComponent,
+    CommendsComponent,
+    CommendCardComponent,
+    CommendListComponent
   ],
   imports: [
+    RouterModule.forRoot(appRoutes),
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,

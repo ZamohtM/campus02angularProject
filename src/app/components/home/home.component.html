@@ -7,6 +7,10 @@
 
 <button label="Bibliothek" (click)="navigateToBib()">Bibliothek</button>
 
+<button label="Recessionen" (click)="toggleRecessions()">Rezessionen</button>
+
+<button label="Kommentare" (click)="navigateToCommends()">Kommentare</button>
+
 <button label="Abmelden" (click)="logOut()">Abmelden</button>
 
 <div [ngSwitch]="activeView">
@@ -22,6 +26,10 @@
 
   <ng-container *ngSwitchCase="'bibliothek'">
     <app-book-lending [bookCollection]="bookCollection"></app-book-lending>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'recessions'">
+    <app-recession-search [recessionCollection]="recessionCollection"></app-recession-search>
   </ng-container>
 
   <!-- Add more ngSwitchCase as needed for other states -->

@@ -1,0 +1,47 @@
+
+<button label="Home" (click)="navigateToHome()">Home</button>
+
+<button label="Liste" (click)="ToggleCommendList()">Kommentarliste</button>
+
+
+
+<ng-container *ngIf="showList">
+    <commend-list [reviewCollection]="reviewCollection" (ItemSelectedEvent)="GetID($event)"></commend-list>
+</ng-container>
+ 
+
+  
+    
+  
+
+    <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+        <label>
+            ID:
+            <input type="text" formControlName="id">
+        </label>
+        <label>
+            reply_id:
+            <input type="text" formControlName="reply_id"></label>
+        <label>
+            book_id:
+            <input type="text" formControlName="book_id">
+        </label>
+        <label>
+            user_id:
+            <input type="text" formControlName="user_id">
+        </label>
+        <label>
+            comment:
+            <textarea type="text" formControlName="comment"></textarea>
+        </label>
+
+        <button type="submit" >Kommentieren</button>
+        <button type="button" (click)="deleteComment()">Delete Comment</button>
+        <button type="button" (click)="Clear()">Clear</button>
+    </form>
+    
+
+    <!--
+
+        <button type="submit" label="Hinzufügen" (click)="addRec()">Kommentieren</button>
+    -->

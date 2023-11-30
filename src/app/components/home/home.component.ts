@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/auth';
 import {BookService} from "../../services/book.service";
 import {Book} from "../../interfaces/book";
+import { Recession } from '../../interfaces/recession';
+import { RecessionService } from "../../services/recession.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +14,7 @@ import {Book} from "../../interfaces/book";
 })
 export class HomeComponent {
 
-  constructor(private router: Router,private auth: AuthService, private books: BookService) { }
+  constructor(private router: Router,private auth: AuthService, private books: BookService, private recessions: RecessionService) { }
 
   logOut() {
     sessionStorage.clear();
@@ -29,6 +31,7 @@ export class HomeComponent {
   userData = {} as User;
   userCollection: User[] = [];
   bookCollection: Book[] = [];
+  recessionCollection: Recession[] = [];
   notification: string = "";
 
 
@@ -77,7 +80,32 @@ export class HomeComponent {
       }
     )
   }
+<<<<<<< HEAD
 */
+=======
+
+
+  toggleRecessions(){
+    this.recessions.getRecessions().subscribe(
+      response => {
+        console.log('here');
+        if(response.length > 0)
+        {
+          this.recessionCollection = response;
+          if(this.activeView!="recessions")
+          {
+            this.activeView="recessions"
+          }
+        }
+      }
+    )
+  }
+
+  navigateToCommends(){
+    this.router.navigateByUrl('/commends');
+  }
+
+>>>>>>> Rezession
   receiveNotification($event: string)
   {
     this.notification = $event;
