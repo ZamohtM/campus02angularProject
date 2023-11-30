@@ -1,28 +1,35 @@
-<br />
-<table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
-<form [formGroup] = "bookLending" >
+<div class="container mt-4">
+  <table datatable [dtOptions]="dtOptions" class="table table-bordered table-hover"></table>
 
-  <label [ngSwitch]="lendStatus">
-    <span *ngSwitchCase="'0'"><strong>Buch verfügbar</strong></span>
-    <span *ngSwitchCase="'1'"><strong>Buch nicht verfügbar</strong></span>
-  </label>
-<p>Title: <strong>{{ message }}</strong></p>
-  <p>Datum letzte Ausleihe: {{ loanDate }}</p>
-  <p>Datum Rückgabe: {{ returnDate }}</p>
+  <form [formGroup]="bookLending" class="mt-4">
+    <div class="form-group">
+      <label [ngSwitch]="lendStatus" class="font-weight-bold">
+        <span *ngSwitchCase="'0'"> <strong>Buch verfügbar</strong></span>
+        <span *ngSwitchCase="'1'"> <strong>Buch nicht verfügbar</strong></span>
+      </label>
+    </div>
+    <br>
+    <div class="form-group">
+      <p>Title: <strong>{{ message }}</strong></p>
+      <p>Datum letzte Ausleihe: {{ loanDate }}</p>
+      <p>Datum Rückgabe: {{ returnDate }}</p>
+    </div>
 
+    <div class="form-group">
+      <label [ngSwitch]="bookCondition" class="font-weight-bold">
+        <span *ngSwitchCase="'0'">Buch neuwertig</span>
+        <span *ngSwitchCase="'1'">Buch abgegriffen</span>
+        <span *ngSwitchCase="'2'">Buch starke Abnutzungen</span>
+        <span *ngSwitchCase="''">Buch Abnutzgrad unbekannt</span>
+      </label>
+      <p>Letzter User: {{ lastUser }}</p>
+    </div>
 
-
-
-  <label [ngSwitch]="bookCondition">
-    <span *ngSwitchCase="'0'"><strong>Buch neuwertig</strong></span>
-    <span *ngSwitchCase="'1'"><strong>Buch abgegriffen</strong></span>
-    <span *ngSwitchCase="'2'"><strong>Buch starke Abnutzungen</strong></span>
-    <span *ngSwitchCase="''"><strong>Buch Abnutzgrad unbekannt</strong></span>
-  </label>
-  <p>Letzter User:  {{ lastUser }}</p>
-
-  <button (click)="bookLendingManagement(lendStatus)">
-    {{ lendStatus === '0' ? 'Buch ausborgen' : (lendStatus === '1' ? 'Buch zurückgeben' : 'Buch ausborgen') }}
-  </button>
-  <button label="Bibliothekseintrag löschen" (click)="removeBibData()">Bibliothekseintrag löschen</button>
-</form>
+    <div class="form-group">
+      <button class="btn btn-primary" (click)="bookLendingManagement(lendStatus)">
+        {{ lendStatus === '0' ? 'Buch ausborgen' : (lendStatus === '1' ? 'Buch zurückgeben' : 'Buch ausborgen') }}
+      </button>
+      <button class="btn btn-danger ml-2" (click)="removeBibData()">Bibliothekseintrag löschen</button>
+    </div>
+  </form>
+</div>
