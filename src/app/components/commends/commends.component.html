@@ -33,6 +33,9 @@
         <label>
             comment:
             <textarea type="text" formControlName="comment"></textarea>
+            <p style="color:red" *ngIf="reviewForm.errors?.['BadWords']">
+                Schimpfwörter sind verboten
+            </p>
         </label>
 
         <button type="submit" >Kommentieren</button>
