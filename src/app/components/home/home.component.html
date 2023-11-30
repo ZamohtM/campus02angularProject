@@ -1,18 +1,17 @@
 
-<button label="Profil" (click)="toggleProfile()">Profil</button>
+<button class="btn btn-primary mb-2 mr-2" (click)="toggleProfile()">Profil</button>
 
-<button label="Mitgleider" (click)="toggleUsers()">Mitglieder</button>
+<button class="btn btn-primary mb-2 mr-2" (click)="toggleUsers()">Mitglieder</button>
 
-<button label="Bücher" (click)="navigateToBooks()">Bücher</button>
+<button class="btn btn-primary mb-2 mr-2" (click)="navigateToBooks()">Bücher</button>
 
-<button label="Bibliothek" (click)="navigateToBib()">Bibliothek</button>
+<button class="btn btn-primary mb-2 mr-2" (click)="navigateToBib()">Bibliothek</button>
 
-<button label="Recessionen" (click)="toggleRecessions()">Rezessionen</button>
+<button class="btn btn-primary mb-2 mr-2" (click)="toggleRecessions()">Rezessionen</button>
 
-<button label="Kommentare" (click)="navigateToCommends()">Kommentare</button>
+<button class="btn btn-primary mb-2 mr-2" (click)="navigateToCommends()">Kommentare</button>
 
-<button label="Abmelden" (click)="logOut()">Abmelden</button>
-
+<button class="btn btn-danger mb-2 mr-2" (click)="logOut()">Abmelden</button>
 <div [ngSwitch]="activeView">
   <ng-container *ngSwitchCase="'profile'">
     <app-profile [userData]="userData" (notificationEvent)="receiveNotification($event)"></app-profile>

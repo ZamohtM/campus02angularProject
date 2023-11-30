@@ -57,8 +57,6 @@ export class CommendsComponent implements OnInit {
   GetID(id: string) {
     this.SelectedID = id;
 
-    console.log("GOT ITEM IN PARENT" + id);
-
     this.propagateForm(id);
   }
 
@@ -93,6 +91,7 @@ export class CommendsComponent implements OnInit {
         console.error('Error adding rec:', error);
       }
     );
+    
   }
   editRec() {
     this.recessionService.editRecession(this.Review.id, this.Review).subscribe(
@@ -137,7 +136,6 @@ export class CommendsComponent implements OnInit {
           this.addRec();
         }
       });
-    
   }
   Clear() {
     this.reviewForm.reset();
@@ -147,5 +145,7 @@ export class CommendsComponent implements OnInit {
     this.delRec();
     this.Clear();
     alert("Kommentar gelöscht");
+    //dirty but does the job
+    location.reload();
   }
 }
