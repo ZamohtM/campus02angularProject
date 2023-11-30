@@ -1,105 +1,126 @@
-<button (click)="navigateToHome()">Home</button>
-<div class="d-flex align-items-center justify-content-center">
-<h2>Bücher</h2>
-</div>
-<div>
-  <app-book-table [bookCollection]="bookCollection" (outputBook)="receiveBook($event)"></app-book-table>
-</div>
-<div class="d-flex flex-column">
-<div class="d-flex flex-column mb-0.5">
-<p class="p-0.5"><strong>ID:</strong> {{ book.id }}</p>
-<p class="p-0.5"><strong>Titel:</strong> {{ book.title }}</p>
-<p class="p-0.5"><strong>Author:</strong> {{ book.author }}</p>
-<p class="p-0.5"><strong>Jahr:</strong> {{ book.year}}</p>
-<p class="p-0.5"><strong>Genre:</strong> {{ book.genre }}</p>
-</div>
-  <div class="d-flex flex-column mb-0.5">
-<div>
-  <button (click)="toggleCreateForm()">Buch hinzufügen</button>
-  <button (click)="toggleEditForm()">Buch bearbeiten</button>
-  <button (click)="removeBook()">Buch entfernen</button>
-</div>
-<div [ngSwitch]="activeForm" >
-  <ng-container *ngSwitchCase="'create'">
-    <h4> Buch hinzufügen</h4>
-    <form [formGroup] = "editForm">
-      <div>
-        <label for="createTitle">Title</label><br />
-        <input type="text" id= "createTitle" formControlName="title" name="title"/>
-        <div style="color:red" *ngIf="title.invalid && (title.dirty || title.touched)">
-          <p *ngIf="title.errors?.['required']">Titel ist ein Pflichtfeld.</p>
-        </div>
+<div class="container mt-3">
+
+  <!-- Navigation Button -->
+  <button class="btn btn-primary mb-3" (click)="navigateToHome()">Home</button>
+
+  <!-- Page Title -->
+  <div class="d-flex align-items-center justify-content-center">
+    <h2>Bücher</h2>
+  </div>
+
+  <!-- Book Table Component -->
+  <div>
+    <app-book-table [bookCollection]="bookCollection" (outputBook)="receiveBook($event)"></app-book-table>
+  </div>
+
+  <div class="row">
+
+    <!-- Book Details -->
+    <div class="col-md-6 mb-3">
+      <div class="d-flex flex-column">
+        <p class="p-0.5"><strong>ID:</strong> {{ book.id }}</p>
+        <p class="p-0.5"><strong>Titel:</strong> {{ book.title }}</p>
+        <p class="p-0.5"><strong>Author:</strong> {{ book.author }}</p>
+        <p class="p-0.5"><strong>Jahr:</strong> {{ book.year}}</p>
+        <p class="p-0.5"><strong>Genre:</strong> {{ book.genre }}</p>
       </div>
-      <div>
-        <label for="createAuthor">Author</label><br />
-        <input type="text" id= "createAuthor" formControlName="author" name="author"/>
-        <div style="color:red" *ngIf="author.invalid && (author.dirty || author.touched)">
-          <p *ngIf="author.errors?.['required']">Author ist ein Pflichtfeld.</p>
+    </div>
+
+    <!-- Book Actions and Form -->
+    <div class="col-md-6">
+      <div class="d-flex flex-column mb-3">
+        <div>
+          <button class="btn btn-success mr-2" (click)="toggleCreateForm()">Buch hinzufügen</button>
+          <button class="btn btn-warning mr-2" (click)="toggleEditForm()">Buch bearbeiten</button>
+          <button class="btn btn-danger" (click)="removeBook()">Buch entfernen</button>
         </div>
-      </div>
 
-      <div>
-        <label for="createYear">Jahr</label><br />
-        <input type="text" id="createYear" formControlName="year" name="year"/>
-        <div style="color:red" *ngIf="year.invalid && (year.dirty || year.touched)">
-          <p *ngIf="year.errors?.['required']">Bitte geben Sie eine korrekte Jahreszahl ein im Format: YYYY</p>
+        <!-- Form based on activeForm -->
+        <div [ngSwitch]="activeForm" class="mt-3">
+          <ng-container *ngSwitchCase="'create'">
+            <h4> Buch hinzufügen</h4>
+            <!-- Create Form -->
+            <form [formGroup]="editForm">
+              <div>
+                <label for="createTitle">Title</label><br />
+                <input type="text" id= "createTitle" formControlName="title" name="title"/>
+                <div style="color:red" *ngIf="title.invalid && (title.dirty || title.touched)">
+                  <p *ngIf="title.errors?.['required']">Titel ist ein Pflichtfeld.</p>
+                </div>
+              </div>
+              <div>
+                <label for="createAuthor">Author</label><br />
+                <input type="text" id= "createAuthor" formControlName="author" name="author"/>
+                <div style="color:red" *ngIf="author.invalid && (author.dirty || author.touched)">
+                  <p *ngIf="author.errors?.['required']">Author ist ein Pflichtfeld.</p>
+                </div>
+              </div>
+
+              <div>
+                <label for="createYear">Jahr</label><br />
+                <input type="text" id="createYear" formControlName="year" name="year"/>
+                <div style="color:red" *ngIf="year.invalid && (year.dirty || year.touched)">
+                  <p *ngIf="year.errors?.['required']">Bitte geben Sie eine korrekte Jahreszahl ein im Format: YYYY</p>
+                </div>
+              </div>
+
+              <div>
+                <label for="createGenre">Genre</label><br />
+                <input type="text" id="createGenre" formControlName="genre" name="genre"/>
+                <div style="color:red" *ngIf="genre.invalid && (genre.dirty || genre.touched)">
+                  <p *ngIf="genre.errors?.['required']">Genre ist ein Pflichtfeld</p>
+                </div>
+              </div>
+              <button class="btn btn-primary" (click)="addBook()" [disabled]="editForm.invalid">Hinzufügen</button>
+            </form>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'edit'">
+            <h4>Buch bearbeiten</h4>
+            <!-- Edit Form -->
+            <form [formGroup]="editForm">
+              <div>
+                <label for="editTitle">Title</label><br />
+                <input type="text" id ="editTitle" formControlName="title" name="title"/>
+                <div style="color:red" *ngIf="title.invalid && (title.dirty || title.touched)">
+                  <p *ngIf="title.errors?.['required']">Titel ist ein Pflichtfeld.</p>
+                </div>
+              </div>
+              <div>
+                <label for="editAuthor">Author</label><br />
+                <input type="text" id="editAuthor" formControlName="author" name="author"/>
+                <div style="color:red" *ngIf="author.invalid && (author.dirty || author.touched)">
+                  <p *ngIf="author.errors?.['required']">Author ist ein Pflichtfeld.</p>
+                </div>
+              </div>
+
+              <div>
+                <label for="editYear">Jahr</label><br />
+                <input type="text" id="editYear" formControlName="year" name="year"/>
+                <div style="color:red" *ngIf="year.invalid && (year.dirty || year.touched)">
+                  <p *ngIf="year.errors?.['required']">Bitte geben Sie eine korrekte Jahreszahl ein im Format: YYYY</p>
+                </div>
+              </div>
+
+              <div>
+                <label for="editGenre">Genre</label><br />
+                <input type="text" id="editGenre" formControlName="genre" name="genre"/>
+                <div style="color:red" *ngIf="genre.invalid && (genre.dirty || genre.touched)">
+                  <p *ngIf="genre.errors?.['required']">Genre ist ein Pflichtfeld</p>
+                </div>
+              </div>
+              <button class="btn btn-primary" (click)="editBook()" [disabled]="editForm.invalid">Bearbeiten</button>
+            </form>
+          </ng-container>
+
+          <ng-container *ngSwitchDefault>
+            <!-- Default content when no case matches -->
+          </ng-container>
         </div>
+
       </div>
-
-      <div>
-        <label for="createGenre">Genre</label><br />
-        <input type="text" id="createGenre" formControlName="genre" name="genre"/>
-        <div style="color:red" *ngIf="genre.invalid && (genre.dirty || genre.touched)">
-          <p *ngIf="genre.errors?.['required']">Genre ist ein Pflichtfeld</p>
-        </div>
-      </div>
-      <button (click)="addBook()" [disabled]="editForm.invalid">Hinzufügen</button>
-    </form>
-  </ng-container>
-
-  <ng-container *ngSwitchCase="'edit'">
-  <h4>Buch bearbeiten</h4>
-
-
-    <form [formGroup] = "editForm" >
-      <div>
-        <label for="editTitle">Title</label><br />
-        <input type="text" id ="editTitle" formControlName="title" name="title"/>
-        <div style="color:red" *ngIf="title.invalid && (title.dirty || title.touched)">
-          <p *ngIf="title.errors?.['required']">Titel ist ein Pflichtfeld.</p>
-        </div>
-      </div>
-      <div>
-        <label for="editAuthor">Author</label><br />
-        <input type="text" id="editAuthor" formControlName="author" name="author"/>
-        <div style="color:red" *ngIf="author.invalid && (author.dirty || author.touched)">
-          <p *ngIf="author.errors?.['required']">Author ist ein Pflichtfeld.</p>
-        </div>
-      </div>
-
-      <div>
-        <label for="editYear">Jahr</label><br />
-        <input type="text" id="editYear" formControlName="year" name="year"/>
-        <div style="color:red" *ngIf="year.invalid && (year.dirty || year.touched)">
-          <p *ngIf="year.errors?.['required']">Bitte geben Sie eine korrekte Jahreszahl ein im Format: YYYY</p>
-        </div>
-      </div>
-
-      <div>
-        <label for="editGenre">Genre</label><br />
-        <input type="text" id="editGenre" formControlName="genre" name="genre"/>
-        <div style="color:red" *ngIf="genre.invalid && (genre.dirty || genre.touched)">
-          <p *ngIf="genre.errors?.['required']">Genre ist ein Pflichtfeld</p>
-        </div>
-      </div>
-      <button (click)="editBook()" [disabled]="editForm.invalid">Bearbeiten</button>
-    </form>
-
-  </ng-container>
-  <ng-container *ngSwitchDefault>
-
-  </ng-container>
-</div>
+    </div>
 
   </div>
+
 </div>
