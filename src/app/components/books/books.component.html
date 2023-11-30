@@ -1,14 +1,25 @@
 <button (click)="navigateToHome()">Home</button>
+<div class="d-flex align-items-center justify-content-center">
 <h2>Bücher</h2>
+</div>
 <div>
   <app-book-table [bookCollection]="bookCollection" (outputBook)="receiveBook($event)"></app-book-table>
 </div>
+<div class="d-flex flex-column">
+<div class="d-flex flex-column mb-0.5">
+<p class="p-0.5"><strong>ID:</strong> {{ book.id }}</p>
+<p class="p-0.5"><strong>Titel:</strong> {{ book.title }}</p>
+<p class="p-0.5"><strong>Author:</strong> {{ book.author }}</p>
+<p class="p-0.5"><strong>Jahr:</strong> {{ book.year}}</p>
+<p class="p-0.5"><strong>Genre:</strong> {{ book.genre }}</p>
+</div>
+  <div class="d-flex flex-column mb-0.5">
 <div>
   <button (click)="toggleCreateForm()">Buch hinzufügen</button>
   <button (click)="toggleEditForm()">Buch bearbeiten</button>
   <button (click)="removeBook()">Buch entfernen</button>
 </div>
-<div [ngSwitch]="activeForm">
+<div [ngSwitch]="activeForm" >
   <ng-container *ngSwitchCase="'create'">
     <h4> Buch hinzufügen</h4>
     <form [formGroup] = "editForm">
@@ -88,4 +99,7 @@
   <ng-container *ngSwitchDefault>
 
   </ng-container>
+</div>
+
+  </div>
 </div>
