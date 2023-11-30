@@ -118,13 +118,9 @@ export class CommendsComponent implements OnInit {
     //console.warn(this.reviewForm.value);
 
     // () value || '').toString(); cast null to string
-    this.Review.id = (this.reviewForm.controls['id'].value || '').toString();
-    this.Review.reply_id = (this.reviewForm.controls['reply_id'].value || '').toString();
-    this.Review.book_id = (this.reviewForm.controls['book_id'].value || '').toString();
-    this.Review.user_id = (this.reviewForm.controls['user_id'].value || '').toString();
-    this.Review.comment = (this.reviewForm.controls['comment'].value || '').toString();
+    this.FormToReview();
     //rewrite above so there are allways the attributes
-    
+
 
     console.warn(this.Review);
 
@@ -132,7 +128,23 @@ export class CommendsComponent implements OnInit {
 
   }
 
+  FormToReview(){
+    this.Review.id = (this.reviewForm.controls['id'].value || '').toString();
+    this.Review.reply_id = (this.reviewForm.controls['reply_id'].value || '').toString();
+    this.Review.book_id = (this.reviewForm.controls['book_id'].value || '').toString();
+    this.Review.user_id = (this.reviewForm.controls['user_id'].value || '').toString();
+    this.Review.comment = (this.reviewForm.controls['comment'].value || '').toString();
+  }
 
+  Clear() {
+    this.reviewForm.reset();
+  }
+  deleteComment(){
+    this.FormToReview();
+    this.delRec();
+    this.Clear();
+    alert("Kommentar gelöscht");
+  }
 
 
 }
