@@ -1,5 +1,5 @@
 import {
-  Component, EventEmitter,
+  Component,
   Input,
   OnInit, Output,
   ViewChild
@@ -43,14 +43,14 @@ export class BooksComponent implements OnInit{
       genre: this.genre.value,
     };
     this.bookService.addBook(this.book).subscribe(
-      (response) => {
+      () => {
         this.updateBookCollection();
         this.sendNotification("add");
       }
     );
   }
   removeBook(){
-    this.bookService.removeBook(this.book.id).subscribe(response =>{
+    this.bookService.removeBook(this.book.id).subscribe(() =>{
       this.updateBookCollection();
       this.sendNotification("remove");
     });
@@ -63,7 +63,7 @@ export class BooksComponent implements OnInit{
       author: this.author.value,
       year: this.year.value,
       genre: this.genre.value,
-    }).subscribe(response =>{
+    }).subscribe(() =>{
       this.updateBookCollection();
       this.sendNotification("edit");
     });

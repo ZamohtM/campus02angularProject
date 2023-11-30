@@ -1,12 +1,12 @@
-<button label="Home" (click)="navigateToHome()">Home</button>
+<button (click)="navigateToHome()">Home</button>
 <h2>Bücher</h2>
 <div>
   <app-book-table [bookCollection]="bookCollection" (outputBook)="receiveBook($event)"></app-book-table>
 </div>
 <div>
-  <button label="Buch hinzufügen" (click)="toggleCreateForm()">Buch hinzufügen</button>
-  <button label="Buch bearbeiten" (click)="toggleEditForm()">Buch bearbeiten</button>
-  <button label="Buch entfernen" (click)="removeBook()">Buch entfernen</button>
+  <button (click)="toggleCreateForm()">Buch hinzufügen</button>
+  <button (click)="toggleEditForm()">Buch bearbeiten</button>
+  <button (click)="removeBook()">Buch entfernen</button>
 </div>
 <div [ngSwitch]="activeForm">
   <ng-container *ngSwitchCase="'create'">
@@ -42,7 +42,7 @@
           <p *ngIf="genre.errors?.['required']">Genre ist ein Pflichtfeld</p>
         </div>
       </div>
-      <button label="Hinzufügen" (click)="addBook()" [disabled]="editForm.invalid">Hinzufügen</button>
+      <button (click)="addBook()" [disabled]="editForm.invalid">Hinzufügen</button>
     </form>
   </ng-container>
 
@@ -81,7 +81,7 @@
           <p *ngIf="genre.errors?.['required']">Genre ist ein Pflichtfeld</p>
         </div>
       </div>
-      <button label="Bearbeiten" (click)="editBook()" [disabled]="editForm.invalid">Bearbeiten</button>
+      <button (click)="editBook()" [disabled]="editForm.invalid">Bearbeiten</button>
     </form>
 
   </ng-container>
