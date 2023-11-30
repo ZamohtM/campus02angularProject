@@ -4,11 +4,11 @@
   <form [formGroup]="bookLending" class="mt-4">
     <div class="form-group">
       <label [ngSwitch]="lendStatus" class="font-weight-bold">
-        <span *ngSwitchCase="'0'">Buch verfügbar</span>
-        <span *ngSwitchCase="'1'">Buch nicht verfügbar</span>
+        <span *ngSwitchCase="'0'"> <strong>Buch verfügbar</strong></span>
+        <span *ngSwitchCase="'1'"> <strong>Buch nicht verfügbar</strong></span>
       </label>
     </div>
-
+    <br>
     <div class="form-group">
       <p>Title: <strong>{{ message }}</strong></p>
       <p>Datum letzte Ausleihe: {{ loanDate }}</p>

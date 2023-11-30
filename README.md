@@ -3,10 +3,12 @@ Book management system
 
 ##########################
 
-Mayer: User
-Knittelfelder: Rezensionen
-Neuhauser: Verleih
-Lunelli: Bücher
+Entitäten:
+
+- Mayer: User
+- Knittelfelder: Rezensionen
+- Neuhauser: Bibliothek
+- Lunelli: Bücher
 
 ##########################
 
