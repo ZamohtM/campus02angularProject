@@ -4,8 +4,10 @@ import { RecessionService } from "../../services/recession.service";
 import { Router } from '@angular/router';
 import { DataTablesModule } from 'angular-datatables';
 import { Subject } from 'rxjs/internal/Subject';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { map } from 'jquery';
+import { CommentBadWords } from '../shared/comment-rules.directive';
+
 
 
 
@@ -21,16 +23,17 @@ export class CommendsComponent implements OnInit {
   SelectedID: string = "";
   Review = {} as Recession;
 
-  //CRUD
-  FormNew!: FormGroup;
+
 
   reviewForm = new FormGroup({
     id: new FormControl(''),
     reply_id: new FormControl(''),
     book_id: new FormControl(''),
     user_id: new FormControl(''),
-    comment: new FormControl('')
-  });
+    comment: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    confirmPassword: new FormControl('', Validators.required)
+  }, { validators: CommentBadWords });
 
 
   constructor(private router: Router, private recessionService: RecessionService, private formBuilder: FormBuilder) { }
@@ -145,11 +148,4 @@ export class CommendsComponent implements OnInit {
     this.Clear();
     alert("Kommentar gelöscht");
   }
-
-
 }
-
-
-
-
-
