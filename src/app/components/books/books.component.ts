@@ -9,6 +9,7 @@ import {Book} from "../../interfaces/book";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DataTableDirective} from "angular-datatables";
 import {Router} from "@angular/router";
+import {yearValidator} from "../shared/year-validator.directive";
 
 @Component({
   selector: 'app-books',
@@ -74,7 +75,7 @@ export class BooksComponent implements OnInit{
       {
         title: ['',Validators.required],
         author: ['',Validators.required],
-        year: ['',[Validators.required,Validators.pattern(/^\d{4}$/)]],
+        year: ['',[Validators.required, yearValidator]],
         genre: ['',Validators.required]
 
       })
