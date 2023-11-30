@@ -3,6 +3,13 @@ Book management system
 
 ##########################
 
+Mayer: User
+Knittelfelder: Rezensionen
+Neuhauser: Verleih
+Lunelli: Bücher
+
+##########################
+
 <<<<<<< HEAD
 INSTALLATION
 
