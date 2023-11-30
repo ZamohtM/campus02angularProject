@@ -114,19 +114,7 @@ export class CommendsComponent implements OnInit {
 
 
 
-  onSubmit() {
-    //console.warn(this.reviewForm.value);
 
-    // () value || '').toString(); cast null to string
-    this.FormToReview();
-    //rewrite above so there are allways the attributes
-
-
-    console.warn(this.Review);
-
-    this.addRec();
-
-  }
 
   FormToReview(){
     this.Review.id = (this.reviewForm.controls['id'].value || '').toString();
@@ -135,7 +123,19 @@ export class CommendsComponent implements OnInit {
     this.Review.user_id = (this.reviewForm.controls['user_id'].value || '').toString();
     this.Review.comment = (this.reviewForm.controls['comment'].value || '').toString();
   }
+  onSubmit() {
+    this.FormToReview();
 
+    this.recessionService.getRecessionById(this.Review.id).subscribe(
+      response => {
+        if (Array.isArray(response) && response.length > 0) {
+          this.editRec();
+        } else {
+          this.addRec();
+        }
+      });
+    
+  }
   Clear() {
     this.reviewForm.reset();
   }

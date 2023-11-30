@@ -42,11 +42,12 @@ export class CommendListComponent implements OnInit{
     }
   };
   }
-  
+
   select(Selected: any): void 
   {
     this.ItemSelectedEvent.emit(Selected.id);
     console.log( Selected.id );
   }
 
+  
 }
