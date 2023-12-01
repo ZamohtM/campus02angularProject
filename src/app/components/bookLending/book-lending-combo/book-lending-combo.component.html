@@ -1,0 +1,8 @@
+<igx-simple-combo
+  class="combo"
+  [data]="bookConditionData"
+  displayKey="name"
+  valueKey="id"
+  [(ngModel)]="selectedConditionId"
+  (ngModelChange)="onConditionChange()"
+></igx-simple-combo>

@@ -1,22 +1,23 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Book} from "../../../interfaces/book";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BookService} from "../../../services/book.service";
 import {bookLending} from "../../../interfaces/bookLending";
 import {BookLendingService} from "../../../services/book-lending.service";
 import {AuthService} from "../../../services/auth.service";
+import {BookLendingComboComponent} from "../book-lending-combo/book-lending-combo.component";
 
 @Component({
   selector: 'app-book-lending',
   templateUrl: './book-lending.component.html',
   styleUrl: './book-lending.component.css'
 })
-export class BookLendingComponent implements OnInit {
+export class BookLendingComponent implements OnInit{
 
   lendStatus: string = "";
   loanDate: string = "";
   returnDate: string = "";
-  bookCondition: string = "";
+
   lastUser: string = "";
 
   constructor(private formBuilder: FormBuilder, private bookLendingService: BookLendingService, private authService: AuthService) {
@@ -25,15 +26,25 @@ export class BookLendingComponent implements OnInit {
   bookLending!: FormGroup;
   clickedBook: string = "";
   message = '';
+
+  selectedConditionIdFromChild: string = '';
+
   @Input() bookCollection: Book[] = [];
   @Input() lendingData: bookLending[] = [];
   @Input() lendingDataEntry: bookLending = {} as bookLending;
   @Input() bibData: bookLending = {} as bookLending;
+  @Output() bookConditionData: { name: string, id: string }[] = [];
+  @Input() bookCondition: string = "";
+
+  @ViewChild('bookCombo') bookCombo!: BookLendingComboComponent;
   dtOptions: DataTables.Settings = {};
 
+
+
   someClickHandler(info: any): void {
-console.log(info.id)
+    console.log(info.id)
     this.bookLendingService.getLendStatusByBookId(info.id).subscribe(response => {
+      console.log(this.bookCondition)
       if (Array.isArray(response) && response.length > 0) {
         this.bookLending.patchValue({
           id: response[0].id,
@@ -45,14 +56,20 @@ console.log(info.id)
           bookCondition: response[0].bookCondition,
 
         })
+
         this.loanDate = response[0].loanDate
         this.lendStatus = response[0].lendStatus
         this.returnDate = response[0].returnDate
         this.bookCondition = response[0].bookCondition
 
+        this.bookCombo.updateSelectedConditionById(this.bookCondition);
+        console.log('BookCondition: ', this.bookCondition);
+
       } else {
         this.bookId = info.id
         this.resetLabels();
+        this.bookCombo.updateSelectedConditionById(this.bookCondition);
+        console.log('BookCondition: ', this.bookCondition);
         this.bookLending.patchValue({
           lendStatus: "0"
         })
@@ -62,6 +79,8 @@ console.log(info.id)
     this.UserTbValue();
     this.clickedBook = info.id;
     this.message = info.title;
+
+
   }
 
   ngOnInit(): void {
@@ -94,6 +113,10 @@ console.log(info.id)
       }
     };
     this.createBookLendingForm();
+  }
+
+  onConditionChange(selectedConditionId: string) {
+    this.selectedConditionIdFromChild = selectedConditionId;
   }
 
   private createBookLendingForm() {
@@ -145,7 +168,7 @@ console.log(info.id)
             returnDate: this.bookLending.controls['loanDate'].value,
             book_id: this.bookId,
             user_id: this.lastUser,
-            bookCondition: this.bookLending.controls['bookCondition'].value
+            bookCondition: this.selectedConditionIdFromChild
           }
           console.log(this.bibData)
           this.bookLendingService.updateBibData(this.bookLending.controls['id'].value, this.bibData as bookLending).subscribe(response => {
@@ -164,7 +187,7 @@ console.log(info.id)
             returnDate: '',
             book_id: this.bookId,
             user_id: this.lastUser,
-            bookCondition: '1'
+            bookCondition: this.selectedConditionIdFromChild
           }
           this.bookLendingService.addBookToBib(this.lendingDataEntry).subscribe()
           console.log("Buch Datum angelegt")
@@ -181,7 +204,7 @@ console.log(info.id)
         returnDate: this.GetDate(),
         book_id: this.bookId,
         user_id: this.lastUser,
-        bookCondition: this.bookLending.controls['bookCondition'].value
+        bookCondition: this.selectedConditionIdFromChild
       }
 
       this.bookLendingService.updateBibData(this.bookLending.controls['id'].value, this.bibData as bookLending).subscribe(response => {

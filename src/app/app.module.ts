@@ -6,24 +6,27 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './components/profile/profile.component';
 import { UsersComponent } from './components/users/users.component';
 import { DataTablesModule } from "angular-datatables";
 import { RecessionSearchComponent } from './recession-search/recession-search.component';
 import { BooksComponent } from './components/books/books.component';
-import {BooktableComponent} from "./components/booktable/booktable.component";
-import {BookLendingComponent} from "./components/bookLending/book-lending/book-lending.component";
+import { BooktableComponent } from "./components/booktable/booktable.component";
+import { BookLendingComponent } from "./components/bookLending/book-lending/book-lending.component";
 import { CommendsComponent } from './components/commends/commends.component';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { CommendCardComponent } from './components/commend-card/commend-card.component';
 import { CommendListComponent } from './components/commend-list/commend-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {IgxComboModule, IgxSimpleComboComponent} from 'igniteui-angular';
+import { BookLendingComboComponent } from './components/bookLending/book-lending-combo/book-lending-combo.component';
 
 const appRoutes: Routes = [
-  { path: 'home', component: HomeComponent},
-  { path: 'commends', component: CommendsComponent}
-]
+  { path: 'home', component: HomeComponent },
+  { path: 'commends', component: CommendsComponent }
+];
 
 @NgModule({
   declarations: [
@@ -39,7 +42,9 @@ const appRoutes: Routes = [
     RecessionSearchComponent,
     CommendsComponent,
     CommendCardComponent,
-    CommendListComponent
+    CommendListComponent,
+    BookLendingComboComponent,
+    BookLendingComboComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -49,9 +54,13 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     DataTablesModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    IgxComboModule,
+    IgxSimpleComboComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

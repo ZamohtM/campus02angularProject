@@ -1,4 +1,8 @@
 <div class="container mt-4">
+  <div class="d-flex align-items-center justify-content-center">
+    <h2>Bibliotheksverwaltung</h2>
+  </div>
+
   <table datatable [dtOptions]="dtOptions" class="table table-bordered table-hover"></table>
 
   <form [formGroup]="bookLending" class="mt-4">
@@ -16,15 +20,8 @@
     </div>
 
     <div class="form-group">
-      <label [ngSwitch]="bookCondition" class="font-weight-bold">
-        <span *ngSwitchCase="'0'">Buch neuwertig</span>
-        <span *ngSwitchCase="'1'">Buch abgegriffen</span>
-        <span *ngSwitchCase="'2'">Buch starke Abnutzungen</span>
-        <span *ngSwitchCase="''">Buch Abnutzgrad unbekannt</span>
-      </label>
-      <p>Letzter User: {{ lastUser }}</p>
+      <book-Lending-Combo #bookCombo (conditionChange)="onConditionChange($event)"></book-Lending-Combo>
     </div>
-
     <div class="form-group">
       <button class="btn btn-primary" (click)="bookLendingManagement(lendStatus)">
         {{ lendStatus === '0' ? 'Buch ausborgen' : (lendStatus === '1' ? 'Buch zurückgeben' : 'Buch ausborgen') }}
