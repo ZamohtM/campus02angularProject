@@ -23,6 +23,7 @@ cmd:
 npm -v
 //in repo navigieren
 cd *working folder*
+npm install igniteui-angular
 npm install -g @angular/cli
 npm install -g json-server
 ng add angular-datatables
