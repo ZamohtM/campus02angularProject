@@ -6,4 +6,5 @@ export interface bookLending {
   book_id: string;
   user_id: string;
   bookCondition: string;
+  notes: string;
 }

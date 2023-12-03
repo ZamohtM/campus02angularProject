@@ -6,6 +6,7 @@ import {bookLending} from "../../../interfaces/bookLending";
 import {BookLendingService} from "../../../services/book-lending.service";
 import {AuthService} from "../../../services/auth.service";
 import {BookLendingComboComponent} from "../book-lending-combo/book-lending-combo.component";
+import {notesLengthValidatorDirective} from "../../shared/notes-length-validator.directive";
 
 @Component({
   selector: 'app-book-lending',
@@ -17,7 +18,6 @@ export class BookLendingComponent implements OnInit{
   lendStatus: string = "";
   loanDate: string = "";
   returnDate: string = "";
-
   lastUser: string = "";
 
   constructor(private formBuilder: FormBuilder, private bookLendingService: BookLendingService, private authService: AuthService) {
@@ -54,9 +54,8 @@ export class BookLendingComponent implements OnInit{
           book_id: response[0].book_id,
           lendStatus: response[0].lendStatus,
           bookCondition: response[0].bookCondition,
-
+          notes: response[0].notes,
         })
-
         this.loanDate = response[0].loanDate
         this.lendStatus = response[0].lendStatus
         this.returnDate = response[0].returnDate
@@ -128,7 +127,8 @@ export class BookLendingComponent implements OnInit{
         returnDate: ['', Validators.required],
         book_id: ['', Validators.required],
         lendStatus: ['', Validators.required],
-        bookCondition: ['', Validators.required]
+        bookCondition: ['', Validators.required],
+        notes: ['', [notesLengthValidatorDirective(15)]]
       })
   }
 
@@ -152,6 +152,9 @@ export class BookLendingComponent implements OnInit{
     this.returnDate = ""
     this.loanDate = ""
     this.lastUser = ""
+    this.bookLending.patchValue({
+      notes: ""
+    })
   }
 
   bookLendingManagement(lendStatus: string): void {
@@ -168,7 +171,8 @@ export class BookLendingComponent implements OnInit{
             returnDate: this.bookLending.controls['loanDate'].value,
             book_id: this.bookId,
             user_id: this.lastUser,
-            bookCondition: this.selectedConditionIdFromChild
+            bookCondition: this.selectedConditionIdFromChild,
+            notes: this.bookLending.controls['notes'].value
           }
           console.log(this.bibData)
           this.bookLendingService.updateBibData(this.bookLending.controls['id'].value, this.bibData as bookLending).subscribe(response => {
@@ -187,7 +191,8 @@ export class BookLendingComponent implements OnInit{
             returnDate: '',
             book_id: this.bookId,
             user_id: this.lastUser,
-            bookCondition: this.selectedConditionIdFromChild
+            bookCondition: this.selectedConditionIdFromChild,
+            notes: this.bookLending.controls['notes'].value
           }
           this.bookLendingService.addBookToBib(this.lendingDataEntry).subscribe()
           console.log("Buch Datum angelegt")
@@ -195,7 +200,6 @@ export class BookLendingComponent implements OnInit{
         }
       })
     } else if (lendStatus === '1') {
-      console.log("ganz Falsch")
       console.log(this.bibData)
       this.bibData = {
         id: this.bookLending.controls['id'].value,
@@ -204,7 +208,8 @@ export class BookLendingComponent implements OnInit{
         returnDate: this.GetDate(),
         book_id: this.bookId,
         user_id: this.lastUser,
-        bookCondition: this.selectedConditionIdFromChild
+        bookCondition: this.selectedConditionIdFromChild,
+        notes: this.bookLending.controls['notes'].value
       }
 
       this.bookLendingService.updateBibData(this.bookLending.controls['id'].value, this.bibData as bookLending).subscribe(response => {

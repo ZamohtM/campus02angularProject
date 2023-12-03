@@ -18,15 +18,22 @@
       <p>Datum letzte Ausleihe: {{ loanDate }}</p>
       <p>Datum Rückgabe: {{ returnDate }}</p>
     </div>
+    <label>Anmerkungen</label><br />
+    <input type="text" id ="notes" formControlName="notes" name="notes"/>
 
+    <div *ngIf="bookLending.get('notes')?.hasError('maxlength')">
+      Die Notizen dürfen maximal 15 Zeichen lang sein.
+    </div>
     <div class="form-group">
       <book-Lending-Combo #bookCombo (conditionChange)="onConditionChange($event)"></book-Lending-Combo>
     </div>
     <div class="form-group">
-      <button class="btn btn-primary" (click)="bookLendingManagement(lendStatus)">
+      <button class="btn btn-primary" (click)="bookLendingManagement(lendStatus)" [disabled]="bookLending.get('notes')?.hasError('maxlength')">
         {{ lendStatus === '0' ? 'Buch ausborgen' : (lendStatus === '1' ? 'Buch zurückgeben' : 'Buch ausborgen') }}
       </button>
-      <button class="btn btn-danger ml-2" (click)="removeBibData()">Bibliothekseintrag löschen</button>
+      <button class="btn btn-danger ml-2" (click)="removeBibData()" [disabled]="bookLending.get('notes')?.hasError('maxlength')">Bibliothekseintrag löschen</button>
+
     </div>
+
   </form>
 </div>
