@@ -7,7 +7,7 @@ import { Subject } from 'rxjs/internal/Subject';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { map } from 'jquery';
 import { CommentBadWords } from '../shared/comment-rules.directive';
-
+import uuid4 from "uuid4";
 
 
 
@@ -83,6 +83,7 @@ export class CommendsComponent implements OnInit {
 
 
   addRec() {
+this.Review.id == "" ? this.Review.id = uuid4() : this.Review.id;
     this.recessionService.addRecession(this.Review).subscribe(
       (response) => {
         console.log('rec added successfully:', response);
